@@ -25,6 +25,7 @@ class UsersController extends Controller
         $this->validate($request, $rules);
 
         $params = $request->only('image','name','bio');
+
         if ($image = $request->file('image')) {
             try {
                 $params['image_url'] = $this->uploadFile($image);

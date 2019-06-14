@@ -16,7 +16,7 @@ class Post extends Model
     ];
 
     protected $appends = [
-        'is_favorite'
+        'is_favorite', 'short_description'
     ];
 
     public function user(){
@@ -52,5 +52,9 @@ class Post extends Model
         }
 
         return false;
+    }
+
+    public function getShortDescriptionAttribute(){
+        return strip_tags($this->attributes['description']);
     }
 }
