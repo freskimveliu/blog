@@ -32,6 +32,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 let newVue = new Vue({});
 
 axios.interceptors.request.use(function (config) {
+    console.log(store.state);
+    console.log(config);
         newVue.$Progress.start();
         return config
     },
@@ -81,4 +83,11 @@ const app = new Vue({
     store,
     render: h => h(App),
     mixin: [mixins],
+    created:function () {
+        let access_token = store.state.access_token;
+        if(access_token != null){
+            store.dispatch('getUser');
+        }
+
+    }
 });

@@ -103,6 +103,19 @@ const store = new Vuex.Store({
                     })
             })
         },
+        getUser({commit}, data) {
+            return new Promise((resolve, reject) => {
+                axios.get('/profile', data)
+                    .then(res => {
+                        let data = res.data.data;
+                        commit('updateUser', data);
+                        resolve(res)
+                    })
+                    .catch(err => {
+                        reject(err);
+                    })
+            })
+        },
         storeAuthUser({commit}) {
             return new Promise((resolve, reject) => {
                 axios.get('/profile')
