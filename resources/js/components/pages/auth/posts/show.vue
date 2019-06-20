@@ -89,7 +89,7 @@
                     buttonsStyling: true,
                 }).then((result) => {
                     if (result.value) {
-                        axios.delete('/my/posts/' + this.$route.params.id + '/comments/' + id)
+                        axios.delete('/my/posts/' + this.$route.params.id + '/comments/' + id + `?index=${index}`)
                             .then(res => {
                                 this.object.comments.splice(index, 1);
                             })
@@ -100,7 +100,27 @@
                 })
 
             }
-        }
+        },
+        mounted: function () {
+            window.Echo.channel(`post.${this.$route.params.id}`)
+                .listen('new-comment', (res) => {
+                    this.object.comments.unshift(res);
+                    let user = this.$store.getters.user;
+                    let user_id;
+                    if (user) {
+                        user_id = user.id;
+                    } else {
+                        user_id = 0;
+                    }
+
+                    if (res.user_id !== user_id) {
+                        this.showNotification(res.user_name + ' wrote on this post!')
+                    }
+                }).listen('delete-comment', (res) => {
+                this.object.comments.splice(res.index, 1);
+                this.showNotification(res.user_name + ' deleted a comment.')
+            })
+        },
     }
 </script>
 

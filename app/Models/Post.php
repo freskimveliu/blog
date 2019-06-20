@@ -16,7 +16,7 @@ class Post extends Model
     ];
 
     protected $appends = [
-        'is_favorite', 'short_description'
+        'is_favorite', 'short_description',
     ];
 
     public function user(){
@@ -39,22 +39,21 @@ class Post extends Model
         return $this->hasMany(PostComment::class,'post_id')->latest();
     }
 
-    public function scopeFilter($query,Filter $filters){
-        return $filters->apply($query);
+    public function is_my_favorite(){
+        return $this->hasOne(UserFavoritePost::class,'post_id')->where('user_id',(User::getUser()->id ?? 0));
     }
 
     public function getIsFavoriteAttribute(){
-        $user = User::getUser();
-
-        if($user){
-            return $user->favorited_posts()->where('post_id',$this->id)->exists();
-
-        }
-
-        return false;
+        if(!$this->relationLoaded('is_my_favorite')) return null;
+        return $this->is_my_favorite()->exists();
     }
 
     public function getShortDescriptionAttribute(){
         return strip_tags($this->attributes['description']);
     }
+
+    public function scopeFilter($query,Filter $filters){
+        return $filters->apply($query);
+    }
+
 }

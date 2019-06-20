@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API\Auth\Posts;
 
+use App\Events\Posts\Comments\DeleteCommentEvent;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class PostCommentsController extends Controller
 {
-    public function destroy($id, $comment_id){
+    public function destroy($id, $comment_id,Request $request){
         $user = User::getUser();
 
         if(!$user)
@@ -23,6 +24,8 @@ class PostCommentsController extends Controller
 
         if(!$comment)
             return $this->respondWithError([],'You can not delete this comment');
+
+        broadcast(new DeleteCommentEvent($comment,$request->get('index')))->toOthers();
 
         $comment->delete();
 

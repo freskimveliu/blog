@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Post;
 use App\Models\PostComment;
+use App\Models\UserFavoritePost;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -61,5 +62,9 @@ class User extends Authenticatable
         }catch (\Exception $exception) {
             return null;
         }
+    }
+
+    public function routeNotificationForSlack($notification){
+        return env('SLACK_HOOK');
     }
 }

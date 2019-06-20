@@ -17,7 +17,7 @@ class PostsController extends Controller
     }
 
     public function show($id){
-        $post = Post::with('category','user','comments.user')->find($id);
+        $post = Post::with('category','user','comments.user','is_my_favorite')->find($id);
 
         if (!$post) {
             return $this->respondWithError([], 'Post does not exists', 404);

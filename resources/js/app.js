@@ -32,8 +32,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 let newVue = new Vue({});
 
 axios.interceptors.request.use(function (config) {
-    console.log(store.state);
-    console.log(config);
         newVue.$Progress.start();
         return config
     },

@@ -4,7 +4,7 @@
             <div class="col-md-12 mt-3">
                 <div class="jumbotron text-center"
                      style="background-image: url(http://www.anasfim.com/p/2018/04/background-of-old-vintage-newspapers-stock-photo-ronstik-13732950-inside-newspaper-background-image.jpg); background-size: 100%;">
-                    <div class="jumbotron-title">The best website for blog posts.</div>
+                    <div class="jumbotron-title">The best website for posts.</div>
                 </div>
             </div>
         </div>

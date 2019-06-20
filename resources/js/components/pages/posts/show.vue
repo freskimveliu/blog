@@ -84,12 +84,12 @@
                     comments: [],
                 },
                 image_src: '',
-                favorite_src: 'https://image.flaticon.com/icons/svg/148/148839.svg',
-                unfavorite_src: 'https://image.flaticon.com/icons/svg/149/149220.svg',
+                star: 'https://image.flaticon.com/icons/svg/148/148839.svg',
+                star_filled: 'https://image.flaticon.com/icons/svg/149/149220.svg',
                 form: {
                     message: '',
                     name: '',
-                }
+                },
             }
         },
         created: function () {
@@ -99,15 +99,35 @@
                     this.object = data.data;
 
                     if (data.data.is_favorite) {
-                        this.image_src = this.favorite_src;
+                        this.image_src = this.star;
                     } else {
-                        this.image_src = this.unfavorite_src;
+                        this.image_src = this.star_filled;
                     }
                     this.object.comments = data.data.comments;
                 })
                 .catch((err) => {
                     console.log(err)
                 });
+        },
+        mounted: function () {
+            window.Echo.channel(`post.${this.$route.params.id}`)
+                .listen('new-comment', (res) => {
+                    this.object.comments.unshift(res);
+                    let user = this.$store.getters.user;
+                    let user_id;
+                    if (user) {
+                        user_id = user.id;
+                    } else {
+                        user_id = 0;
+                    }
+
+                    if (res.user_id !== user_id) {
+                        this.showNotification(res.user_name + ' wrote on this post!')
+                    }
+                }).listen('delete-comment', (res) => {
+                    this.object.comments.splice(res.index, 1);
+                    this.showNotification(res.user_name + ' deleted a comment.')
+                })
         },
         computed: {
             isLogged: function () {
@@ -128,10 +148,10 @@
                         this.object.is_favorite = res.data.data;
                         if (this.object.is_favorite) {
                             this.showNotification('Post added to your favorites.');
-                            this.image_src = this.favorite_src;
+                            this.image_src = this.star;
                         } else {
                             this.showNotification('Post removed from your favorites.');
-                            this.image_src = this.unfavorite_src;
+                            this.image_src = this.star_filled;
                         }
                     })
                     .catch(err => {
@@ -162,7 +182,7 @@
                     buttonsStyling: true,
                 }).then((result) => {
                     if (result.value) {
-                        axios.delete('/posts/' + this.$route.params.id + '/comments/' + id)
+                        axios.delete('/posts/' + this.$route.params.id + '/comments/' + id + `?index=${index}`)
                             .then(res => {
                                 this.object.comments.splice(index, 1);
                             })
