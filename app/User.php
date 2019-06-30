@@ -30,7 +30,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'im_following', 'is_my_profile'
+        'im_following', 'is_my_profile', 'is_following_me'
     ];
 
     /*
@@ -69,19 +69,17 @@ class User extends Authenticatable
 
     /*
     |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
     | ACCESORS
     |--------------------------------------------------------------------------
     */
-
     public function getImfollowingAttribute(){
         if(!$this->relationLoaded('followers')) return null;
         return $this->followers()->where('user_id',(User::getUser()->id ?? 0))->exists();
+    }
+
+    public function getIsFollowingMeAttribute(){
+        if(!$this->relationLoaded('followings')) return null;
+        return $this->followings()->where('friend_id',(User::getUser()->id ?? 0))->exists();
     }
 
     public function getIsMyProfileAttribute(){
@@ -90,6 +88,14 @@ class User extends Authenticatable
         }
         return $this->getKey() == User::getUser()->id;
     }
+
+    /*
+   |--------------------------------------------------------------------------
+   | SCOPES
+   |--------------------------------------------------------------------------
+   */
+
+
 
     /*
    |--------------------------------------------------------------------------

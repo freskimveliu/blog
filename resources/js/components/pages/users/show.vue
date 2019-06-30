@@ -105,6 +105,9 @@
         methods: {
             scroll() {
                 window.onscroll = () => {
+                    if (this.$route.name != 'users.show') {
+                        return false;
+                    }
                     let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
 
                     if (bottomOfWindow && (this.current_page < this.last_page)) {

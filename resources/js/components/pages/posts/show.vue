@@ -14,7 +14,10 @@
                         <span><font-awesome-icon icon="clock" class="icon alt"/> {{ object.created_at | time }}</span>
                         <span><font-awesome-icon icon="calendar" class="icon alt"/> {{ object.created_at | day}}</span>
                         <span><font-awesome-icon icon="list" class="icon alt"/> {{ object.category.name }}</span>
-                        <span><font-awesome-icon icon="user" class="icon alt"/> {{ object.user ? object.user.name : 'Not Set' }}</span>
+                        <span><font-awesome-icon icon="user" class="icon alt"/>
+                            <router-link v-if="object.user" :to="'/users/'+object.user.username">{{ object.user.name }}
+                            </router-link>
+                        </span>
                     </div>
                 </div>
                 <img :src="object.image_url" class="cover-image" :class="{'d-none' : !object.image_url}">
