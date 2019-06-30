@@ -7,9 +7,9 @@ import logout from './components/pages/auth/logout';
 import register from './components/pages/auth/register';
 import profile from './components/pages/auth/profile';
 import store from './store';
-import news from './components/pages/news/index'
 import posts from './components/pages/posts/index'
 import postsShow from './components/pages/posts/show';
+import usersShow from './components/pages/users/show';
 import adminCategories from './components/pages/admin/categories/index'
 import adminCreateCategories from './components/pages/admin/categories/create'
 import adminEditCategories from './components/pages/admin/categories/edit'
@@ -37,6 +37,7 @@ const routes = [
     { path: '/profile',                  component: profile,                  name: 'profile',                  meta: { requiresAuth: true }},
     { path: '/posts',                    component: posts,                    name: 'posts.index'},
     { path: '/posts/:id',                component: postsShow,                name: 'posts.show' },
+    { path: '/users/:slug',              component: usersShow,                name: 'users.show' },
     { path: '/admin/categories',         component: adminCategories,          name: 'admin.categories.index',   meta: { requiresAuth: true, onlyForAdmins:true}},
     { path: '/admin/categories/create',  component: adminCreateCategories,    name: 'admin.categories.create',  meta: { requiresAuth: true, onlyForAdmins:true}},
     { path: '/admin/categories/:id/edit',component: adminEditCategories,      name: 'admin.categories.edit',    meta: { requiresAuth: true, onlyForAdmins:true}},

@@ -36,6 +36,9 @@
     }
   },
   "autoload": {
+    "files": [
+      "app/Extensions/constants.php"
+    ],
     "psr-4": {
       "App\\": "app/"
     },

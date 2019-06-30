@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Posts;
 
 use App\Filters\PostsFilters;
 use App\Models\Post;
+use App\Notifications\Posts\FavoriteActionNotification;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +12,9 @@ use App\Http\Controllers\Controller;
 class PostsController extends Controller
 {
     public function index(PostsFilters $filters){
-        $posts = Post::with('category','user')->filter($filters)->latest()->withCount('open_by_users','favorite_by_users')->paginate($this->per_page);
+        $posts = Post::with('category','user','is_my_favorite')
+            ->filter($filters)->latest()->withCount('open_by_users','favorite_by_users')
+            ->paginate($this->per_page);
 
         return $this->respondWithSuccess($posts);
     }
@@ -32,6 +35,12 @@ class PostsController extends Controller
     }
 
     public function favoriteAction($id, Request $request){
+        $post = Post::findOrFail($id);
+
+        if (!$post) {
+            return $this->respondWithError([], 'Post does not exists', 404);
+        }
+
         $is_favorite = $request->get('is_favorite',false);
 
         $user = User::getUser();

@@ -17,4 +17,25 @@ class PostsFilters extends Filter
                 return $this->builder;
         }
     }
+
+    public function category($value){
+        if(is_array($value)){
+            return $this->builder->whereIn('category_id',$value);
+        }
+        return $this->builder->where('category_id',$value);
+    }
+
+    public function favorites($value){
+        if(isset($value) && $value == 'true'){
+            return $this->builder->whereHas('favorites');
+        }
+        return $this->builder;
+    }
+
+    public function q($value){
+        return $this->builder->where('title','LIKE',"%$value%")
+            ->orWhereHas('user',function ($q) use ($value){
+                $q->where('name','LIKE',"%$value%");
+            });
+    }
 }

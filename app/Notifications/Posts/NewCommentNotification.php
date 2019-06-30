@@ -35,15 +35,15 @@ class NewCommentNotification extends Notification
 
 
     public function toSlack($notifiable){
-        $comment = $this->comment;
-
-        return (new SlackMessage)
-            ->from(env('APP_NAME'), ':ghost:')
-            ->content('Someone wrote on your post.')
-            ->attachment(function ($attachment) use ($comment) {
-                $attachment->thumb($comment->post->image_url ?? '');
-                $attachment->title($comment->post->title, env('APP_URL')."/posts/$comment->post_id");
-                $attachment->content('Comment: '.$comment->message ?? '');
-            });
+//        $comment = $this->comment;
+//
+//        return (new SlackMessage)
+//            ->from(env('APP_NAME'), ':ghost:')
+//            ->content('Someone wrote on your post.')
+//            ->attachment(function ($attachment) use ($comment) {
+//                $attachment->thumb($comment->post->image_url ?? '');
+//                $attachment->title($comment->post->title, env('APP_URL')."/posts/$comment->post_id");
+//                $attachment->content('Comment: '.$comment->message ?? '');
+//            });
     }
 }

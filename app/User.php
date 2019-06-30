@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\UserFavoritePost;
+use App\Models\UserRelationship;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,8 +16,9 @@ class User extends Authenticatable
 {
     use Notifiable,HasApiTokens;
 
+
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'image_url', 'bio'
+        'name', 'email', 'password', 'role', 'image_url', 'bio', 'username'
     ];
 
     protected $hidden = [
@@ -26,6 +28,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'im_following', 'is_my_profile'
+    ];
+
+    /*
+   |--------------------------------------------------------------------------
+   | RELATIONS
+   |--------------------------------------------------------------------------
+   */
 
     public function posts(){
         return $this->hasMany(Post::class);
@@ -43,6 +55,47 @@ class User extends Authenticatable
         return $this->hasMany(PostComment::class,'user_id');
     }
 
+    public function relationships(){
+        return $this->hasMany(UserRelationship::class,'user_id');
+    }
+
+    public function followings(){
+        return $this->hasMany(UserRelationship::class,'user_id')->where('status','following');
+    }
+
+    public function followers(){
+        return $this->hasMany(UserRelationship::class,'friend_id')->where('status','following');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESORS
+    |--------------------------------------------------------------------------
+    */
+
+    public function getImfollowingAttribute(){
+        if(!$this->relationLoaded('followers')) return null;
+        return $this->followers()->where('user_id',(User::getUser()->id ?? 0))->exists();
+    }
+
+    public function getIsMyProfileAttribute(){
+        if(!User::getUser()){
+            return null;
+        }
+        return $this->getKey() == User::getUser()->id;
+    }
+
+    /*
+   |--------------------------------------------------------------------------
+   | METHODS
+   |--------------------------------------------------------------------------
+   */
 
     private static $user;
     public static function getUser() {
