@@ -48,7 +48,7 @@
                                 {{ user.name}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <router-link :class="'dropdown-item'" :to="'/profile'">Profile</router-link>
+                                <router-link :class="'dropdown-item'" :to="'/users/'+$store.getters.user.username">Profile</router-link>
                                 <div class="dropdown-divider"></div>
                                 <router-link :class="'dropdown-item'" :to="'/logout'">Log Out</router-link>
                             </div>

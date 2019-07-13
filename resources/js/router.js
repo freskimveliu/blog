@@ -34,7 +34,7 @@ const routes = [
     { path: '/login',                    component: login,                    name: 'login',     },
     { path: '/register',                 component: register,                 name: 'register',  },
     { path: '/logout',                   component: logout,                   name: 'logout',                   meta: { requiresAuth: true }},
-    { path: '/profile',                  component: profile,                  name: 'profile',                  meta: { requiresAuth: true }},
+    { path: '/profile/edit',             component: profile,                  name: 'profile.edit',             meta: { requiresAuth: true }},
     { path: '/posts',                    component: posts,                    name: 'posts.index'},
     { path: '/posts/:id',                component: postsShow,                name: 'posts.show' },
     { path: '/users/:slug',              component: usersShow,                name: 'users.show' },

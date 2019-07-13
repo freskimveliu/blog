@@ -21,6 +21,11 @@
                                 <button class="btn btn-sm px-4" @click="relationshipAction">Following</button>
                             </div>
                         </div>
+                        <div class="follow-user ml-5 pl-3" v-if="object.is_my_profile">
+                            <div class="following">
+                                <router-link :to="'/profile/edit'" class="btn btn-sm px-4">Edit Profile</router-link>
+                            </div>
+                        </div>
                     </div>
                     <div class="d-flex counts">
                         <div class="posts-count">
@@ -217,4 +222,7 @@
         display: block;
     }
 
+    .follow-user {
+        height: 40px;
+    }
 </style>
