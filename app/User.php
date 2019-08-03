@@ -67,13 +67,17 @@ class User extends Authenticatable
         return $this->hasMany(UserRelationship::class,'friend_id')->where('status','following');
     }
 
+    public function follower(){
+        return $this->hasMany(UserRelationship::class,'friend_id')->where('status','following')->where('user_id',(User::getUser()->id ?? 0));
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESORS
     |--------------------------------------------------------------------------
     */
     public function getImfollowingAttribute(){
-        if(!$this->relationLoaded('followers')) return null;
+        if(!($this->relationLoaded('followers') || ($this->relationLoaded('follower')))) return null;
         return $this->followers()->where('user_id',(User::getUser()->id ?? 0))->exists();
     }
 

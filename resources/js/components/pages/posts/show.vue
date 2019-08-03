@@ -4,6 +4,9 @@
             <div class="col-md-12">
                 <div class="my-5">
                     <h3>{{ object.title }}</h3>
+                    <div class="text-right" v-if="($store.getters.isLogged) && (object.user_id === $store.getters.user.id)">
+                        <router-link :to="'/my/posts/'+object.id+'/edit'"><font-awesome-icon icon="pen" class="icon alt"/><span class="ml-1">Edit Post</span></router-link>
+                    </div>
                     <hr>
                 </div>
                 <div class="post-options mb-3">

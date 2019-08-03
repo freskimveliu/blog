@@ -44,12 +44,9 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col-md-12 mb-2">
-                <h4>Posts</h4>
-            </div>
+        <div class="row mt-5 posts-container">
             <div class="col-md-12 posts">
-                <div class="row">
+                <div class="row pt-4 px-2" v-if="canShowUserPosts()">
                     <div class="col-4 mb-4" v-for="post in posts">
                         <router-link :to="'/posts/'+post.id" class="user-post">
                             <div class="user-post-image">
@@ -67,6 +64,15 @@
                                 </div>
                             </div>
                         </router-link>
+                    </div>
+                    <div class="col-md-12 text-center pb-2" v-if="posts.length === 0">
+                        <h5>This Account doesn't have posts.</h5>
+                    </div>
+                </div>
+                <div class="row py-5" v-else>
+                    <div class="col-md-12 text-center">
+                        <h5>This Account is Private.</h5>
+                        <div class="mt-2">Follow to see their posts.</div>
                     </div>
                 </div>
             </div>
@@ -93,21 +99,35 @@
                 posts: [],
                 current_page: 1,
                 last_page: 1,
-
+                username: '',
             }
         },
         created() {
-            let username = this.$route.params.slug;
-            axios.get(`/users/${username}`)
-                .then(res => {
-                    this.object = res.data.data;
-                })
-                .catch(err => {
-                    console.log(err)
-                });
-            this.getUsersPosts(1);
+            if(this.$store.state.is_logged){
+                this.getUserDetails();
+            }
+        },
+        beforeRouteUpdate(to, from, next) {
+            next();
+            this.posts = [];
+            this.username = this.$route.params.slug;
+            this.getUserDetails();
         },
         methods: {
+            getUserDetails() {
+                this.username = this.$route.params.slug;
+                axios.get(`/users/${this.username}`)
+                    .then(res => {
+                        this.object = res.data.data;
+                        if (this.canShowUserPosts()) {
+                            this.getUsersPosts(1);
+                        }
+                        document.title = this.object.name || 'Blog';
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
+            },
             scroll() {
                 window.onscroll = () => {
                     if (this.$route.name != 'users.show') {
@@ -115,7 +135,7 @@
                     }
                     let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
 
-                    if (bottomOfWindow && (this.current_page < this.last_page)) {
+                    if (bottomOfWindow && (this.current_page < this.last_page) && this.canShowUserPosts()) {
                         this.getUsersPosts(this.current_page + 1);
                     }
                 };
@@ -142,6 +162,8 @@
                     return;
                 }
 
+                this.posts = [];
+
                 axios.put(`/my/relationships/${this.$route.params.slug}`, {
                     action: this.object.im_following ? 'unfollow' : 'follow'
                 })
@@ -149,6 +171,7 @@
                         if (this.object.im_following === true) {
                             this.object.followers_count--;
                         } else {
+                            this.getUsersPosts(1);
                             this.object.followers_count++;
                         }
                         this.object.im_following = !this.object.im_following;
@@ -157,9 +180,22 @@
                         console.log(err)
                     })
             },
+            canShowUserPosts() {
+                if (this.object.id == this.$store.getters.user.id) {
+                    return true;
+                }
+                if (this.object.im_following) {
+                    return true;
+                }
+                return false;
+            }
         },
         mounted() {
             this.scroll();
+        },
+        beforeRouteLeave(from,to,next){
+            next();
+            document.title = 'Blog';
         }
     }
 </script>
@@ -224,5 +260,10 @@
 
     .follow-user {
         height: 40px;
+    }
+
+    .posts-container {
+        border: 1px solid #f4f4f4;
+        box-shadow: 5px -5px 5px #f4f4f4;
     }
 </style>

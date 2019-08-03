@@ -3,7 +3,6 @@
     Route::post(        '/register',                  'API\Auth\AuthController@register');
     Route::post(        '/login',                     'API\Auth\AuthController@login');
     Route::apiResource( '/users',                     'API\Users\UsersController');
-    Route::get(         '/users/{slug}/posts',        'API\Users\UserPostsController@index');
     Route::apiResource( '/posts',                     'API\Posts\PostsController');
     Route::apiResource( '/posts/{id}/comments',       'API\Posts\PostCommentsController');
     Route::get(         '/categories',                'API\Auth\Posts\PostsController@getCategories');
@@ -16,6 +15,7 @@ Route::group(['middleware'=>'api-auth'],function (){
     Route::apiResource( '/my/posts/{id}/comments',    'API\Auth\Posts\PostCommentsController');
     Route::apiResource( '/my/posts',                  'API\Auth\Posts\PostsController');
     Route::apiResource( '/my/relationships',          'API\Auth\Users\UserRelationshipsController');
+    Route::get(         '/users/{slug}/posts',        'API\Auth\Users\UserPostsController@index');
 });
 
 

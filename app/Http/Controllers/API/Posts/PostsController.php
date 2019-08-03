@@ -4,23 +4,33 @@ namespace App\Http\Controllers\API\Posts;
 
 use App\Filters\PostsFilters;
 use App\Models\Post;
-use App\Notifications\Posts\FavoriteActionNotification;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class PostsController extends Controller
 {
+    public $ids = [];
+    public function __construct(){
+        parent::__construct();
+
+        if(User::getUser())
+            $this->ids   = User::getUser()->followings()->pluck('friend_id')->toArray();
+    }
+
     public function index(PostsFilters $filters){
         $posts = Post::with('category','user','is_my_favorite')
-            ->filter($filters)->latest()->withCount('open_by_users','favorite_by_users')
-            ->paginate($this->per_page);
+                     ->filter($filters)
+                     ->latest()
+                     ->withCount('open_by_users','favorite_by_users')
+                     ->MyNewsFeedPosts($this->ids)
+                     ->paginate($this->per_page);
 
         return $this->respondWithSuccess($posts);
     }
 
     public function show($id){
-        $post = Post::with('category','user','comments.user','is_my_favorite')->find($id);
+        $post = Post::with('category','user','comments.user','is_my_favorite')->MyNewsFeedPosts($this->ids)->find($id);
 
         if (!$post) {
             return $this->respondWithError([], 'Post does not exists', 404);
@@ -35,7 +45,7 @@ class PostsController extends Controller
     }
 
     public function favoriteAction($id, Request $request){
-        $post = Post::findOrFail($id);
+        $post = Post::MyNewsFeedPosts($this->ids)->findOrFail($id);
 
         if (!$post) {
             return $this->respondWithError([], 'Post does not exists', 404);

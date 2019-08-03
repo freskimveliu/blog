@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Users;
+namespace App\Http\Controllers\API\Auth\Users;
 
 use App\Models\Post;
 use App\User;
@@ -10,10 +10,14 @@ use App\Http\Controllers\Controller;
 class UserPostsController extends Controller
 {
     public function index($slug){
-        $object = User::whereUsername($slug)->withCount('posts')->first();
+        $object = User::whereUsername($slug)->withCount('posts')->with('followers')->first();
 
         if (!$object) {
             return $this->respondWithError([], 'User not found', 404);
+        }
+
+        if(!($object->im_following) && ($object->id != User::getUser()->id)){
+            return $this->respondWithError([],"This Account is Private. Follow to see their photos and videos.");
         }
 
         $posts = Post::where('user_id',$object->id)

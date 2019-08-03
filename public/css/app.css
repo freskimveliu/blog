@@ -11225,3 +11225,8 @@ h3 {
   transform: rotate(45deg);
 }
 
+a,
+a:hover {
+  text-decoration: none;
+}
+

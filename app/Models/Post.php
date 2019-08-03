@@ -19,45 +19,60 @@ class Post extends Model
         'is_favorite', 'short_description',
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function open_by_users(){
-        return $this->belongsToMany(User::class,'user_opened_posts','post_id','user_id');
+    public function open_by_users()
+    {
+        return $this->belongsToMany(User::class, 'user_opened_posts', 'post_id', 'user_id');
     }
 
-    public function favorite_by_users(){
-        return $this->belongsToMany(User::class,'user_favorited_posts','post_id','user_id');
+    public function favorite_by_users()
+    {
+        return $this->belongsToMany(User::class, 'user_favorited_posts', 'post_id', 'user_id');
     }
 
-    public function favorites(){
-        return $this->hasMany(UserFavoritePost::class,'post_id');
+    public function favorites()
+    {
+        return $this->hasMany(UserFavoritePost::class, 'post_id');
     }
 
-    public function comments(){
-        return $this->hasMany(PostComment::class,'post_id')->latest();
+    public function comments()
+    {
+        return $this->hasMany(PostComment::class, 'post_id')->latest();
     }
 
-    public function is_my_favorite(){
-        return $this->hasOne(UserFavoritePost::class,'post_id')->where('user_id',(User::getUser()->id ?? 0));
+    public function is_my_favorite()
+    {
+        return $this->hasOne(UserFavoritePost::class, 'post_id')->where('user_id', (User::getUser()->id ?? 0));
     }
 
-    public function getIsFavoriteAttribute(){
-        if(!$this->relationLoaded('is_my_favorite')) return null;
+    public function getIsFavoriteAttribute()
+    {
+        if (!$this->relationLoaded('is_my_favorite')) return null;
         return $this->is_my_favorite()->exists();
     }
 
-    public function getShortDescriptionAttribute(){
+    public function getShortDescriptionAttribute()
+    {
         return strip_tags($this->attributes['description']);
     }
 
-    public function scopeFilter($query,Filter $filters){
+    public function scopeFilter($query, Filter $filters)
+    {
         return $filters->apply($query);
+    }
+
+    public function scopeMyNewsFeedPosts($query,$ids = []){
+        if((User::getUser()))
+            return $query->where('user_id',(User::getUser()->id ?? 0))->orWhereIn('user_id',$ids);
     }
 
 }
