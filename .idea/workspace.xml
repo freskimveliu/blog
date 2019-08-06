@@ -3,13 +3,21 @@
   <component name="ChangeListManager">
     <list default="true" id="1402c7b1-b1a9-4d14-b745-a7e6be04320a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.styleci.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Extensions/constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Extensions/constants.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserRelationshipsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserRelationshipsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Posts/PostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Posts/PostsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UserPostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserPostsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Users/UsersController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/UserRelationship.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserRelationship.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/pages/posts/show.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/pages/posts/show.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/header/navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/header/navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/pages/home/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/pages/home/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/pages/posts/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/pages/posts/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/pages/users/show.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/pages/users/show.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
@@ -118,34 +126,35 @@
     <session id="46507109">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="29" />
-          <entry key="project.open.time.0" value="6" />
+          <entry key="project.closed" value="34" />
+          <entry key="project.open.time.0" value="8" />
           <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.14" value="1" />
-          <entry key="project.open.time.15" value="5" />
-          <entry key="project.open.time.16" value="1" />
+          <entry key="project.open.time.15" value="6" />
+          <entry key="project.open.time.16" value="2" />
           <entry key="project.open.time.18" value="2" />
           <entry key="project.open.time.19" value="1" />
-          <entry key="project.open.time.2" value="5" />
+          <entry key="project.open.time.2" value="6" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="2" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="30" />
+          <entry key="project.opened" value="35" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="editorconfig" value="1" />
           <entry key="env" value="12" />
-          <entry key="gitattributes" value="1" />
-          <entry key="js" value="30" />
+          <entry key="gitattributes" value="2" />
+          <entry key="js" value="38" />
           <entry key="json" value="6" />
-          <entry key="php" value="156" />
-          <entry key="scss" value="3" />
+          <entry key="php" value="215" />
+          <entry key="scss" value="7" />
           <entry key="sql" value="1" />
           <entry key="svg" value="2" />
           <entry key="ts" value="4" />
-          <entry key="vue" value="30" />
+          <entry key="vue" value="48" />
           <entry key="yml" value="2" />
         </counts>
       </usages-collector>
@@ -154,35 +163,35 @@
           <entry key=".env file" value="12" />
           <entry key="Blade" value="5" />
           <entry key="JSON" value="6" />
-          <entry key="JavaScript" value="30" />
-          <entry key="PHP" value="151" />
-          <entry key="PLAIN_TEXT" value="1" />
-          <entry key="SCSS" value="3" />
+          <entry key="JavaScript" value="38" />
+          <entry key="PHP" value="210" />
+          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="SCSS" value="7" />
           <entry key="SQL" value="1" />
           <entry key="SVG" value="2" />
           <entry key="TypeScript" value="4" />
-          <entry key="Vue.js" value="30" />
+          <entry key="Vue.js" value="48" />
           <entry key="YAML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="env" value="44" />
-          <entry key="js" value="805" />
+          <entry key="js" value="820" />
           <entry key="json" value="48" />
-          <entry key="php" value="9776" />
-          <entry key="scss" value="44" />
-          <entry key="vue" value="10939" />
+          <entry key="php" value="14397" />
+          <entry key="scss" value="124" />
+          <entry key="vue" value="18489" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="44" />
           <entry key="JSON" value="48" />
-          <entry key="JavaScript" value="805" />
-          <entry key="PHP" value="9776" />
-          <entry key="SCSS" value="44" />
-          <entry key="Vue.js" value="10939" />
+          <entry key="JavaScript" value="820" />
+          <entry key="PHP" value="14397" />
+          <entry key="SCSS" value="124" />
+          <entry key="Vue.js" value="18489" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -193,42 +202,19 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="blade" />
-        <option value="JavaScript File" />
         <option value="Vue Single File Component" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>update</find>
-      <find>src=&quot;</find>
-      <find>url(</find>
-      <find>hr</find>
-      <find>jum</find>
-      <find>broad</find>
-      <find>QUEUE</find>
-      <find>favorite_src</find>
-      <find>$thumbUrl</find>
-      <find>image</find>
-      <find>fields</find>
-      <find>$content</find>
-      <find>$username</find>
-      <find>notify</find>
-      <find>$pretext</find>
-      <find>new</find>
-      <find>colo</find>
-      <find>color</find>
-      <find>container</find>
-      <find>font-size:</find>
-      <find>user-post-title</find>
-      <find>favorites</find>
-      <find>dd(</find>
       <find>is_following</find>
       <find>v-</find>
       <find>this.im</find>
@@ -236,6 +222,29 @@
       <find>profile</find>
       <find>alert(</find>
       <find>newComme</find>
+      <find>'following'</find>
+      <find>following</find>
+      <find>d-flex</find>
+      <find>friend</find>
+      <find>my_relationships_as_a_friend</find>
+      <find>follower</find>
+      <find>followers</find>
+      <find>followera</find>
+      <find>closeEvent</find>
+      <find>current</find>
+      <find>slice</find>
+      <find>comment</find>
+      <find>submitForm</find>
+      <find>div-image</find>
+      <find>post-image</find>
+      <find>post-tt</find>
+      <find>post-views</find>
+      <find>views</find>
+      <find>d-fle</find>
+      <find>suggested-user</find>
+      <find>suggested-users-content</find>
+      <find>post-vi</find>
+      <find>#</find>
     </findStrings>
     <replaceStrings>
       <replace>px-3</replace>
@@ -253,6 +262,8 @@
       <replace>checkbox-container</replace>
       <replace>user-post-details</replace>
       <replace>im_following</replace>
+      <replace>RELATIONSHIP_STATUS_FOLLOWING</replace>
+      <replace>closeDropdownMenu</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -261,14 +272,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/js/components/pages/auth/profile.vue" />
-        <option value="$PROJECT_DIR$/resources/js/components/pages/auth/posts/index.vue" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Posts/PostsController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UsersController.php" />
-        <option value="$PROJECT_DIR$/resources/views/app.blade.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/pages/home/index.vue" />
-        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Broadcasting/Broadcasters/PusherBroadcaster.php" />
         <option value="$PROJECT_DIR$/app/Events/NewComment.php" />
         <option value="$PROJECT_DIR$/config/broadcasting.php" />
         <option value="$PROJECT_DIR$/resources/js/bootstrap.js" />
@@ -290,28 +293,36 @@
         <option value="$PROJECT_DIR$/database/migrations/2019_06_29_222335_add_username_at_users_table.php" />
         <option value="$PROJECT_DIR$/database/seeds/FillUsernameAtUsersTableSeed.php" />
         <option value="$PROJECT_DIR$/app/Notifications/Posts/NewCommentNotification.php" />
-        <option value="$PROJECT_DIR$/resources/js/mixins.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/API/Users/UserPostsController.php" />
         <option value="$PROJECT_DIR$/app/Models/UserFollowers.php" />
-        <option value="$PROJECT_DIR$/app/Models/UserRelationship.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_06_30_183026_create_user_relationships_table.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Users/UsersController.php" />
-        <option value="$PROJECT_DIR$/app/Extensions/constants.php" />
         <option value="$PROJECT_DIR$/composer.json" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserRelationshipsController.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/pages/posts/index.vue" />
-        <option value="$PROJECT_DIR$/resources/js/components/header/navbar.vue" />
-        <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserPostsController.php" />
-        <option value="$PROJECT_DIR$/resources/sass/app.scss" />
         <option value="$PROJECT_DIR$/resources/js/components/pages/posts/show.vue" />
-        <option value="$PROJECT_DIR$/app/User.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Posts/PostsController.php" />
-        <option value="$PROJECT_DIR$/app/Models/Post.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/pages/users/show.vue" />
         <option value="$PROJECT_DIR$/resources/js/router.js" />
         <option value="$PROJECT_DIR$/resources/js/app.js" />
         <option value="$PROJECT_DIR$/resources/js/store.js" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_08_03_135522_add_is_private_account_migration_at_users_table.php" />
+        <option value="$PROJECT_DIR$/app/Extensions/constants.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Users/UsersController.php" />
+        <option value="$PROJECT_DIR$/app/Models/UserRelationship.php" />
+        <option value="$PROJECT_DIR$/resources/js/event-bus.js" />
+        <option value="$PROJECT_DIR$/database/factories/UserFactory.php" />
+        <option value="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" />
+        <option value="$PROJECT_DIR$/resources/js/mixins.js" />
+        <option value="$PROJECT_DIR$/resources/js/components/pages/home/index.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/App.vue" />
+        <option value="$PROJECT_DIR$/app/Models/Post.php" />
+        <option value="$PROJECT_DIR$/resources/sass/app.scss" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Posts/PostsController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/pages/users/show.vue" />
+        <option value="$PROJECT_DIR$/routes/api.php" />
+        <option value="$PROJECT_DIR$/app/User.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/header/navbar.vue" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserFollowRequestsController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserRelationshipsController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/SuggestedUsersController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/pages/posts/index.vue" />
       </list>
     </option>
   </component>
@@ -463,7 +474,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="store&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/store.js&#10;app&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/app.js&#10;main.js&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/node_modules/@fortawesome/vue-fontawesome/examples/vue-cli-webpack/src/main.js&#10;router&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/router.js&#10;store.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/store.js&#10;app.js&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/app.js&#10;postComm&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostCommentsController.php&#10;postsCont&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;user.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/User.php&#10;postsC&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;app.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/sass/app.scss&#10;posts/show&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/posts/show.vue&#10;postsControl&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;post.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Models/Post.php&#10;UsersController&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Users/UsersController.php&#10;pi.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/routes/api.php&#10;user&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/User.php&#10;posts/index&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/posts/index.vue&#10;sto&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/store.js&#10;usersCon&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Users/UsersController.php&#10;api&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/routes/api.php&#10;userRela&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Models/UserRelationship.php&#10;UserRelationshipsController&#9;null&#9;null&#10;api.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/routes/api.php&#10;userR&#9;null&#9;null&#10;mixi&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/mixins.js&#10;user.p&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/User.php&#10;UserPostsController&#9;null&#9;null&#10;mixin&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/mixins.js&#10;router.j&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/router.js&#10;posts&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Filters/PostsFilters.php&#10;postscontr&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;app.scs&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/sass/app.scss&#10;postCon&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;postFilt&#9;null&#9;null&#10;api.php&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/routes/api.php&#10;categories/index&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/admin/categories/index.vue&#10;postsControll&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;index.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/posts/index.vue&#10;show.vue&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/posts/show.vue&#10;exce&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Exceptions&#10;PostsCon&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;app.php&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/config/app.php&#10;postsController&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;user.ph&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/User.php&#10;PostCom&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Auth/Posts/PostCommentsController.php&#10;client.php&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/vendor/guzzlehttp/guzzle/src/Client.php&#10;postComment&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostCommentsController.php&#10;NewCommeNo&#9;null&#9;null&#10;show.vu&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/posts/show.vue" />
+    <property name="SearchEverywhereHistoryKey" value="userRelation&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Auth/Users/UserRelationshipsController.php&#10;user.php&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/User.php&#10;users/show&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/users/show.vue&#10;SuggestedUsersController&#9;null&#9;null&#10;api.php&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/routes/api.php&#10;na&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/header/navbar.vue&#10;PostsController&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;api.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/routes/api.php&#10;app.sc&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/sass/app.scss&#10;post&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Models/Post.php&#10;user&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/User.php&#10;app&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/sass/app.scss&#10;posts/index&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/posts/index.vue&#10;home/index&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/home/index.vue&#10;mixin&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/mixins.js&#10;users/s&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/users/show.vue&#10;UsersController&#9;null&#9;null&#10;UserPostsController&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Auth/Users/UserPostsController.php&#10;UserFollowRequestsController&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Auth/Users/UserFollowRequestsController.php&#10;UserRelationshipsController&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Auth/Users/UserRelationshipsController.php&#10;usersCont&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Users/UsersController.php&#10;cons&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Extensions/constants.php&#10;userRela&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Models/UserRelationship.php&#10;store&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/store.js&#10;main.js&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/node_modules/@fortawesome/vue-fontawesome/examples/vue-cli-webpack/src/main.js&#10;router&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/router.js&#10;store.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/store.js&#10;app.js&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/app.js&#10;postComm&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostCommentsController.php&#10;postsCont&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;user.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/User.php&#10;postsC&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;app.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/sass/app.scss&#10;posts/show&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/posts/show.vue&#10;postsControl&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;post.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Models/Post.php&#10;pi.&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/routes/api.php&#10;sto&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/store.js&#10;usersCon&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Users/UsersController.php&#10;api&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/routes/api.php&#10;userR&#9;null&#9;null&#10;mixi&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/mixins.js&#10;user.p&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/User.php&#10;router.j&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/router.js&#10;posts&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Filters/PostsFilters.php&#10;postscontr&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;app.scs&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/sass/app.scss&#10;postCon&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/app/Http/Controllers/API/Posts/PostsController.php&#10;postFilt&#9;null&#9;null&#10;categories/index&#9;FILE&#9;file://C:/Users/Admin/Desktop/VueJs/Blog/resources/js/components/pages/admin/categories/index.vue" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -552,11 +563,16 @@
       <workItem from="1564417869082" duration="4797000" />
       <workItem from="1564434830969" duration="17000" />
       <workItem from="1564572472752" duration="212000" />
+      <workItem from="1564839533205" duration="28742000" />
+      <workItem from="1564999356156" duration="77000" />
+      <workItem from="1565029666397" duration="16188000" />
+      <workItem from="1565078186803" duration="28000" />
+      <workItem from="1565080484373" duration="603000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="285930000" />
+    <option name="totallyTimeSpent" value="331568000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -592,29 +608,6 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.5565345" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32840723" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39901477" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32790446" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3168654" />
-      <window_info anchor="bottom" id="TypeScript" order="12" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -623,112 +616,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Events/Posts/Comments/NewCommentEvent.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="48" column="31" selection-start-line="48" selection-start-column="31" selection-end-line="48" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Events/Posts/Comments/DeleteCommentEvent.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="46" column="27" selection-start-line="46" selection-start-column="27" selection-end-line="46" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Auth/Posts/PostCommentsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/UserFavoritePost.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="27" lean-forward="true" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="167" column="55" selection-start-line="167" selection-start-column="55" selection-end-line="167" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/slack-notification-channel/src/Messages/SlackAttachmentField.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/slack-notification-channel/src/Messages/SlackAttachment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3213">
-          <caret line="189" column="32" selection-start-line="189" selection-start-column="27" selection-end-line="189" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Notifications/Posts/FavoriteActionNotification.php" />
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/slack-notification-channel/src/Messages/SlackMessage.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-595">
-          <caret line="170" column="20" selection-start-line="170" selection-start-column="20" selection-end-line="170" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="176" lean-forward="true" selection-start-line="176" selection-end-line="176" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Exceptions/Handler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="48" column="28" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.mix.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/pages/admin/categories/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="80" column="14" lean-forward="true" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/QueriesRelationships.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2261">
-          <caret line="167" column="35" selection-start-line="167" selection-start-column="20" selection-end-line="167" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Filters/PostsFilters.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="34" column="30" lean-forward="true" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/seeds/FillUsernameAtUsersTableSeed.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -749,21 +636,7 @@
     <entry file="file://$PROJECT_DIR$/public/images/icons/link.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/mixins.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="28" column="48" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Models/UserFollowers.php" />
-    <entry file="file://$PROJECT_DIR$/database/seeds/DatabaseSeeder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="43" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2019_06_30_183026_create_user_relationships_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -778,13 +651,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/UserRelationship.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="26" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -792,30 +658,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Extensions/constants.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" selection-start-column="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/pages/admin/users/show.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-391" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserRelationshipsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="39" column="67" selection-start-line="39" selection-start-column="67" selection-end-line="39" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/pages/posts/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-731">
-          <caret line="47" column="43" lean-forward="true" selection-start-line="47" selection-start-column="43" selection-end-line="47" selection-end-column="43" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php">
@@ -832,62 +677,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/header/navbar.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="63" column="20" lean-forward="true" selection-start-line="63" selection-start-column="20" selection-end-line="63" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Users/UsersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="47" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserPostsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/sass/app.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="545" column="10" selection-start-line="545" selection-start-column="10" selection-end-line="545" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/pages/posts/show.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Post.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="50" column="39" selection-start-line="50" selection-start-column="39" selection-end-line="50" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-680">
@@ -899,13 +688,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
           <caret line="47" column="26" lean-forward="true" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Posts/PostsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -933,27 +715,217 @@
     <entry file="file://$PROJECT_DIR$/node_modules/@fortawesome/vue-fontawesome/examples/vue-cli-webpack/src/main.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/pages/users/show.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2108">
-          <caret line="124" column="47" selection-start-line="124" selection-start-column="47" selection-end-line="124" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="28" column="72" selection-start-line="28" selection-start-column="72" selection-end-line="28" selection-end-column="72" />
-          <folding>
-            <element signature="e#54#89#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_08_03_135522_add_is_private_account_migration_at_users_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/filters.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/partials/icon.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/partials/text-editor.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Models/UserRelationship.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="30" column="69" selection-start-line="30" selection-start-column="69" selection-end-line="30" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserPostsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="12" column="81" selection-start-line="12" selection-start-column="81" selection-end-line="12" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Users/UsersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="11" column="53" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UsersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-119">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/event-bus.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/store.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="110" column="51" lean-forward="true" selection-start-line="110" selection-start-column="51" selection-end-line="110" selection-end-column="51" />
+        <state relative-caret-position="85">
+          <caret line="6" column="51" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/factories/PostFactory.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/seeds/PostsTableSeeder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/seeds/DatabaseSeeder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/seeds/UsersTableSeeder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="60" selection-start-line="15" selection-start-column="60" selection-end-line="15" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/factories/UserFactory.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/pages/posts/show.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="192" column="70" selection-start-line="192" selection-start-column="70" selection-end-line="192" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/pages/home/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="20" lean-forward="true" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/sass/app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="380" column="18" selection-start-line="380" selection-start-column="18" selection-end-line="380" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Posts/PostsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="55" column="32" lean-forward="true" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/mixins.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.editorconfig">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitattributes">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Models/Post.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="59" column="45" selection-start-line="59" selection-start-column="45" selection-end-line="59" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="100" selection-start-line="21" selection-start-column="76" selection-end-line="21" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/header/navbar.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="44" column="84" selection-start-line="44" selection-start-column="84" selection-end-line="44" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/pages/users/show.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="219" column="22" selection-start-line="190" selection-start-column="16" selection-end-line="219" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserRelationshipsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="66" column="11" lean-forward="true" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/UserFollowRequestsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="40" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Extensions/constants.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="118" column="5" selection-start-line="118" selection-start-column="4" selection-end-line="118" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/API/Auth/Users/SuggestedUsersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="121" selection-start-line="17" selection-start-column="121" selection-end-line="17" selection-end-column="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/pages/posts/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="103" column="63" selection-start-line="103" selection-start-column="63" selection-end-line="103" selection-end-column="63" />
         </state>
       </provider>
     </entry>

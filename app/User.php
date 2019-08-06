@@ -18,7 +18,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'image_url', 'bio', 'username'
+        'name', 'email', 'password', 'role', 'image_url', 'bio', 'username', 'is_private_account'
     ];
 
     protected $hidden = [
@@ -27,10 +27,11 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_private_account'=> 'boolean',
     ];
 
     protected $appends = [
-        'im_following', 'is_my_profile', 'is_following_me'
+        'im_following', 'is_my_profile', 'is_following_me', 'my_relationship_status', 'image'
     ];
 
     /*
@@ -59,31 +60,41 @@ class User extends Authenticatable
         return $this->hasMany(UserRelationship::class,'user_id');
     }
 
+    public function my_relationship_with_this_user(){
+        return $this->hasOne(UserRelationship::class,'friend_id')->where('user_id',(User::getUser()->id ?? 0));
+    }
+
+    public function my_relationships(){
+        return $this->hasMany(UserRelationship::class,'friend_id');
+    }
+
     public function followings(){
-        return $this->hasMany(UserRelationship::class,'user_id')->where('status','following');
+        return $this->hasMany(UserRelationship::class,'user_id')->where('status',RELATIONSHIP_STATUS_FOLLOWING);
     }
 
     public function followers(){
-        return $this->hasMany(UserRelationship::class,'friend_id')->where('status','following');
-    }
-
-    public function follower(){
-        return $this->hasMany(UserRelationship::class,'friend_id')->where('status','following')->where('user_id',(User::getUser()->id ?? 0));
+        return $this->hasMany(UserRelationship::class,'friend_id')->where('status',RELATIONSHIP_STATUS_FOLLOWING);
     }
 
     /*
     |--------------------------------------------------------------------------
-    | ACCESORS
+    | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getImfollowingAttribute(){
-        if(!($this->relationLoaded('followers') || ($this->relationLoaded('follower')))) return null;
+    public function getImFollowingAttribute(){
+        if(!($this->relationLoaded('followers'))) return null;
         return $this->followers()->where('user_id',(User::getUser()->id ?? 0))->exists();
     }
 
     public function getIsFollowingMeAttribute(){
         if(!$this->relationLoaded('followings')) return null;
         return $this->followings()->where('friend_id',(User::getUser()->id ?? 0))->exists();
+    }
+
+    public function getMyRelationshipStatusAttribute(){
+        if(!$this->relationLoaded('my_relationship_with_this_user')) return null;
+
+        return $this->my_relationship_with_this_user()->first()->status ?? null;
     }
 
     public function getIsMyProfileAttribute(){
@@ -93,12 +104,19 @@ class User extends Authenticatable
         return $this->getKey() == User::getUser()->id;
     }
 
+    public function getImageAttribute(){
+        return $this->image_url ?? asset('/images/defaults/profile.png');
+    }
+
     /*
    |--------------------------------------------------------------------------
    | SCOPES
    |--------------------------------------------------------------------------
    */
 
+    public function scopeSuggestedUsers($query,$ids){
+        return $query->whereNotIn('id',$ids)->where('id','<>',(User::getUser()->id ?? 0));
+    }
 
 
     /*

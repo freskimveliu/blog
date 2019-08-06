@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="row my-4">
-            <div class="col-md-12 ">
+        <div class="row py-4">
+            <div class="col-md-8">
                 <div class=" justify-content-between">
-                    <div class="d-inline-flex mb-3">
+                    <div class="d-inline-flex mb-4">
                         <div class="dropdown">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 Filter By Category
@@ -22,7 +22,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="d-inline-flex float-sm-left float-md-right">
+                    <div class="w-100">
                         <input type="text" class="form-control search-input" placeholder="Search post"
                                @keyup.enter="fetchItems(1)" @change="fetchItems(1)"
                                v-model="search_query">
@@ -30,44 +30,90 @@
                 </div>
             </div>
         </div>
-        <div class="row post my-2 mb-4 pb-4" v-for="(post,index) in posts">
-            <div class="col-md-8">
-                <div class="mb-3">
-                    <router-link :to="'/posts/'+post.id" class="">
-                        <img class="post-image" :src="post.image_url">
-                    </router-link>
-                    <div class="post-title">
-                        <router-link :to="'/posts/'+post.id" class="">{{ post.title}}</router-link>
+        <div class="row">
+            <div class="col-md-8" v-for="(post,index) in posts">
+                <div class="post-wrapper mb-5">
+                    <div class="post-user-details m-3">
+                        <div>
+                            <div class="post-user-image d-inline-block">
+                                <router-link :to="'/users/'+post.user.username">
+                                    <img :src="post.user.image" class="">
+                                </router-link>
+                            </div>
+                            <div class="post-user-name ml-3 d-inline-block font-weight-bold">
+                                <router-link :to="'/users/'+post.user.username">
+                                    {{ post.user.name }}
+                                </router-link>
+                            </div>
+                        </div>
                     </div>
-                    <div class="post-body mt-3">
-                        {{ post.short_description | str_limit(250)}}
+                    <div class="post-title m-3">
+                        <router-link :to="'/posts/'+post.id">{{ post.title}}</router-link>
+                    </div>
+                    <router-link :to="'/posts/'+post.id">
+                        <div class="post-image">
+                            <img :src="post.image_url">
+                        </div>
+                    </router-link>
+                    <div class="post-details">
+                        <div class="d-flex justify-content-between mx-3 mt-3">
+                            <div>
+                                <div class="post-category">
+                                    {{ post.category.name }}
+                                </div>
+                                <div class="post-views font-weight-bold">
+                                    {{ post.open_by_users_count }} views
+                                </div>
+                            </div>
+                            <div class="favorite" v-if="$store.state.is_logged"
+                                 @click="favoriteAction(post.id,index)">
+                                <img :src="post.is_favorite ? star_filled : star">
+                            </div>
+                        </div>
+                        <div class="post-body m-3">
+                            <div>
+                                {{ post.short_description | str_limit(310)}}
+                            </div>
+                        </div>
+                        <div class="post-created-date m-3">
+                            {{ post.diff_for_humans }}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="d-inline-flex">
-                    <div class="post-options">
-                        <div>
-                            <font-awesome-icon icon="list" class="icon alt"/>
-                            <span>{{ post.category.name }}</span>
-                        </div>
-                        <div>
-                            <font-awesome-icon icon="user" class="icon alt"/>
-                            <router-link v-if="post.user" :to="'/users/'+post.user.username">{{ post.user.name }}
+            <div class="col-md-4 d-sm-none d-md-block">
+                <div class="suggested-users">
+                    <div class="suggested-users-title m-2">
+                        Suggestions For You
+                    </div>
+                    <div class="suggested-users-content" v-if="suggested_users.length > 0">
+                        <div v-for="(suggested_user,key) in suggested_users"
+                             class="suggested-user m-2 d-flex justify-content-between">
+                            <router-link :to="'/users/'+suggested_user.username">
+                                <div class="user-details d-flex">
+                                    <div class="user-image">
+                                        <img :src="suggested_user.image"/>
+                                    </div>
+                                    <div class="user-name ml-2">
+                                        {{ suggested_user.name }}
+                                    </div>
+                                </div>
                             </router-link>
-                        </div>
-                        <div>
-                            <font-awesome-icon icon="calendar" class="icon alt"/>
-                            <span>{{ post.created_at | day}}</span>
-                        </div>
-                        <div>
-                            <font-awesome-icon icon="clock" class="icon alt"/>
-                            <span>{{ post.created_at | time }}</span>
+                            <div class="actions">
+                                <div v-if="suggested_user.my_relationship_status == null">
+                                    <a href="javascript:void(0)" @click="followUser(suggested_user.username,key)">Follow</a>
+                                </div>
+                                <div class="text-capitalize"
+                                     :class="suggested_user.my_relationship_status === 'following' ? 'text-primary' : 'text-warning'"
+                                     v-if="suggested_user.my_relationship_status !== null">
+                                    {{ suggested_user.my_relationship_status }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="d-inline favorite float-right" v-if="$store.state.is_logged" @click="favoriteAction(post.id,index)">
-                    <img :src="post.is_favorite ? star_filled : star">
+                    <div v-else class="m-2 font-weight-bold">
+                        Now we don't have any suggestion for you.
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,11 +139,13 @@
                 categories: [],
                 my_favorites: false,
                 search_query: '',
+                suggested_users: []
             }
         },
         created: function () {
             this.fetchItems();
             this.fetchCategories();
+            this.getSuggestedUsers();
         },
         methods: {
             fetchItems(page) {
@@ -170,28 +218,39 @@
             myFavoritesClicked() {
                 this.my_favorites = !this.my_favorites;
                 this.fetchItems(1);
+            },
+            getSuggestedUsers() {
+                axios.get('/suggested-users')
+                    .then(res => {
+                        let data = res.data;
+                        this.suggested_users = data.data;
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            },
+            followUser(user_name, key) {
+                axios.put(`/my/relationships/${user_name}`, {
+                    action: 'follow'
+                })
+                    .then(res => {
+                        let response_status = res.data.data.status;
+
+                        if (response_status === 'following') {
+                            this.suggested_users[key].my_relationship_status = 'following';
+                        } else {
+                            this.suggested_users[key].my_relationship_status = 'requested';
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             }
         },
     }
 </script>
 
 <style scoped>
-    .post .post-image {
-        width: 150px;
-        display: block;
-        float: left;
-        margin-right: 15px;
-        border-radius: 10px;
-    }
-
-    .post-options > div {
-        margin-bottom: 10px;
-    }
-
-    .post-options {
-        margin-top: 0;
-    }
-
     /* The checkbox-container */
     .checkbox-container {
         margin: 7px 60px;
@@ -204,5 +263,94 @@
 
     a {
         text-decoration: none;
+    }
+
+    .post-wrapper, .suggested-users {
+        border: 1px solid #e6e6e6;
+        border-radius: 3px;
+        background: #fff;
+    }
+
+    .post-user-image {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: 2px solid #e6e6e6;
+        padding: 2px;
+    }
+
+    .post-user-image img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .post-image {
+        height: 350px;
+        width: 100%;
+    }
+
+    .post-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .post-created-date {
+        color: #999;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        font-size: 10px;
+    }
+
+    .post-views {
+        margin-top: 3px;
+    }
+
+    .post-category {
+        color: #999;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+    .suggested-users {
+        position: fixed;
+        top: 50%;
+        width: 26%; /* change this*/
+        transform: translateY(-50%);
+    }
+
+    .suggested-users-content {
+        max-height: 325px;
+        width: 100%;
+        overflow-y: scroll;
+    }
+
+    @media (max-width: 991px) {
+        .suggested-users {
+            top: 244px;
+        }
+    }
+
+    .suggested-users-title {
+        color: #999;
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 500;
+    }
+
+    .suggested-users .user-image {
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        border: 1px solid #e6e6e6;
+    }
+
+    .suggested-users .user-image img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
     }
 </style>

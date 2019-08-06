@@ -38,7 +38,7 @@ class PostsController extends Controller
 
         $user = User::getUser();
         if($user){
-            $user->opened_posts()->sync($post->id,false);
+            $user->opened_posts()->attach($post->id);
         }
 
         return $this->respondWithSuccess($post);

@@ -1,8 +1,10 @@
 <template>
     <div>
         <app-navbar></app-navbar>
-        <div class="container mb-4">
-            <router-view></router-view>
+        <div id="wrapper">
+            <div class="container mb-4">
+                <router-view></router-view>
+            </div>
         </div>
         <!-- set progressbar -->
         <vue-progress-bar></vue-progress-bar>

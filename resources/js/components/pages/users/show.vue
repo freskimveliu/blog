@@ -1,24 +1,27 @@
 <template>
     <div>
-        <div class="row mt-4">
+        <div class="row pt-4">
             <div class="col-md-3">
                 <div class="user-image-div">
                     <img :src="object.image_url ? object.image_url : default_user_image()">
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="user-details mt-2">
+                <div class="user-details pt-2">
                     <div class="d-flex">
                         <div class="user-name">
                             {{ object.name }}
                         </div>
                         <div class="follow-user ml-5 pl-3"
                              v-if="!object.is_my_profile">
-                            <div class="not-following" v-show="!object.im_following">
+                            <div class="not-following" v-show="(object.my_relationship_status === 'unfollowing') || (object.my_relationship_status == null)">
                                 <button @click="relationshipAction" class="btn btn-sm btn-primary px-4">Follow</button>
                             </div>
-                            <div class="following" v-show="object.im_following">
+                            <div class="following" v-show="(object.my_relationship_status === 'following')">
                                 <button class="btn btn-sm px-4" @click="relationshipAction">Following</button>
+                            </div>
+                            <div class="following" v-show="(object.my_relationship_status === 'requested')">
+                                <button class="btn btn-sm px-4" @click="relationshipAction">Requested</button>
                             </div>
                         </div>
                         <div class="follow-user ml-5 pl-3" v-if="object.is_my_profile">
@@ -81,6 +84,8 @@
 </template>
 
 <script>
+    import { EventBus } from "../../../event-bus.js";
+
     export default {
         name: "users.show",
         data: function () {
@@ -95,6 +100,7 @@
                     followers_count: 0,
                     followings_count: 0,
                     is_my_profile: false,
+                    is_private_account: false,
                 },
                 posts: [],
                 current_page: 1,
@@ -164,17 +170,50 @@
 
                 this.posts = [];
 
+                let status = this.object.my_relationship_status;
+                let action = '';
+
+                switch (status) {
+                    case 'following':
+                    case 'requested':
+                        action = 'unfollow';
+                        break;
+                    case 'unfollowing':
+                        action = 'follow';
+                        break;
+                    case null:
+                        action = 'follow';
+                        break;
+                    default:
+                        return false;
+                }
+
                 axios.put(`/my/relationships/${this.$route.params.slug}`, {
-                    action: this.object.im_following ? 'unfollow' : 'follow'
+                    action: action
                 })
                     .then(res => {
-                        if (this.object.im_following === true) {
-                            this.object.followers_count--;
-                        } else {
-                            this.getUsersPosts(1);
-                            this.object.followers_count++;
+                        let response_status = res.data.data.status;
+
+                        switch (response_status) {
+                            case 'following':
+                                this.object.im_following = true;
+                                this.object.followers_count++;
+                                break;
+                            case 'requested':
+                                break;
+                            case 'unfollowing':
+                                if (status === 'following') {
+                                    this.object.followers_count--;
+                                }
+                                this.object.im_following = false;
+                                break;
                         }
-                        this.object.im_following = !this.object.im_following;
+
+                        this.object.my_relationship_status = response_status;
+
+                        if (this.object.im_following) {
+                            this.getUsersPosts(1);
+                        }
                     })
                     .catch(err => {
                         console.log(err)
@@ -192,6 +231,9 @@
         },
         mounted() {
             this.scroll();
+            EventBus.$on('new-follower-for-auth-user',()=>{
+                this.object.followers_count++;
+            })
         },
         beforeRouteLeave(from,to,next){
             next();

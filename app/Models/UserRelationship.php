@@ -18,4 +18,20 @@ class UserRelationship extends Model
     public function friend(){
         return $this->belongsTo(User::class,'friend_id');
     }
+
+    public function scopeUnFollowing($query){
+        return $query->where('status',RELATIONSHIP_STATUS_UNFOLLOWING);
+    }
+
+    public function scopeNotUnFollowing($query){
+        return $query->where('status','<>',RELATIONSHIP_STATUS_UNFOLLOWING);
+    }
+
+    public function scopeRequested($query){
+        return $query->where('status',RELATIONSHIP_STATUS_REQUESTED);
+    }
+
+    public function scopeFriend($query,$friend_id){
+        return $query->where('friend_id',$friend_id);
+    }
 }
