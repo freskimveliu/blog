@@ -31,8 +31,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8" v-for="(post,index) in posts">
-                <div class="post-wrapper mb-5">
+            <div class="col-md-8">
+                <div class="post-wrapper mb-5" v-for="(post,index) in posts" v-if="posts.length > 0">
                     <div class="post-user-details m-3">
                         <div>
                             <div class="post-user-image d-inline-block">
@@ -80,11 +80,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="my-5 text-center" v-if="posts.length === 0">
+                    <h5> We couldn't find any post.</h5>
+                </div>
             </div>
             <div class="col-md-4 d-sm-none d-md-block">
                 <div class="suggested-users">
-                    <div class="suggested-users-title m-2">
-                        Suggestions For You
+                    <div class="suggested-users-title m-2 d-flex justify-content-between">
+                        <div>
+                            Suggestions For You
+                        </div>
+                        <div>
+                            <a href="javascript:void(0)" @click="getSuggestedUsers">
+                                <font-awesome-icon icon="sync"/>
+                            </a>
+                        </div>
                     </div>
                     <div class="suggested-users-content" v-if="suggested_users.length > 0">
                         <div v-for="(suggested_user,key) in suggested_users"
@@ -139,7 +149,7 @@
                 categories: [],
                 my_favorites: false,
                 search_query: '',
-                suggested_users: []
+                suggested_users: [],
             }
         },
         created: function () {
@@ -245,7 +255,7 @@
                     .catch(err => {
                         console.log(err)
                     })
-            }
+            },
         },
     }
 </script>
@@ -254,103 +264,5 @@
     /* The checkbox-container */
     .checkbox-container {
         margin: 7px 60px;
-    }
-
-    .search-input {
-        min-width: 350px;
-        font-size: 14px;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    .post-wrapper, .suggested-users {
-        border: 1px solid #e6e6e6;
-        border-radius: 3px;
-        background: #fff;
-    }
-
-    .post-user-image {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        border: 2px solid #e6e6e6;
-        padding: 2px;
-    }
-
-    .post-user-image img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-
-    .post-image {
-        height: 350px;
-        width: 100%;
-    }
-
-    .post-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .post-created-date {
-        color: #999;
-        margin-bottom: 5px;
-        text-transform: uppercase;
-        font-size: 10px;
-    }
-
-    .post-views {
-        margin-top: 3px;
-    }
-
-    .post-category {
-        color: #999;
-        font-size: 13px;
-        text-transform: uppercase;
-    }
-
-    .suggested-users {
-        position: fixed;
-        top: 50%;
-        width: 26%; /* change this*/
-        transform: translateY(-50%);
-    }
-
-    .suggested-users-content {
-        max-height: 325px;
-        width: 100%;
-        overflow-y: scroll;
-    }
-
-    @media (max-width: 991px) {
-        .suggested-users {
-            top: 244px;
-        }
-    }
-
-    .suggested-users-title {
-        color: #999;
-        font-size: 14px;
-        line-height: 18px;
-        font-weight: 500;
-    }
-
-    .suggested-users .user-image {
-        height: 25px;
-        width: 25px;
-        border-radius: 50%;
-        border: 1px solid #e6e6e6;
-    }
-
-    .suggested-users .user-image img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
     }
 </style>

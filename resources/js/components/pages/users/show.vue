@@ -1,6 +1,16 @@
 <template>
     <div>
         <div class="row pt-4">
+            <div class="col-md-9 offset-md-3 user-notifications">
+                <div v-if="object.is_following_me_and_im_not_following_him">
+                    {{object.name }} is following you, follow back to see his/her posts.
+                </div>
+                <div v-if="object.has_requested_to_follow_me">
+                    {{object.name }} has requested to follow you, confirm <a href="javascript:void(0)"
+                                                                             @click="confirmFollowRequest(object.relationships_as_a_user[0].id)"
+                                                                             class="text-primary"> here.</a>
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="user-image-div">
                     <img :src="object.image_url ? object.image_url : default_user_image()">
@@ -14,13 +24,16 @@
                         </div>
                         <div class="follow-user ml-5 pl-3"
                              v-if="!object.is_my_profile">
-                            <div class="not-following" v-show="(object.my_relationship_status === 'unfollowing') || (object.my_relationship_status == null)">
+                            <div class="not-following"
+                                 v-show="(object.relationship_status_as_a_friend_with_auth_user === 'unfollowing') || (object.relationship_status_as_a_friend_with_auth_user == null)">
                                 <button @click="relationshipAction" class="btn btn-sm btn-primary px-4">Follow</button>
                             </div>
-                            <div class="following" v-show="(object.my_relationship_status === 'following')">
+                            <div class="following"
+                                 v-show="(object.relationship_status_as_a_friend_with_auth_user === 'following')">
                                 <button class="btn btn-sm px-4" @click="relationshipAction">Following</button>
                             </div>
-                            <div class="following" v-show="(object.my_relationship_status === 'requested')">
+                            <div class="following"
+                                 v-show="(object.relationship_status_as_a_friend_with_auth_user === 'requested')">
                                 <button class="btn btn-sm px-4" @click="relationshipAction">Requested</button>
                             </div>
                         </div>
@@ -49,8 +62,8 @@
         </div>
         <div class="row mt-5 posts-container">
             <div class="col-md-12 posts">
-                <div class="row pt-4 px-2" v-if="canShowUserPosts()">
-                    <div class="col-4 mb-4" v-for="post in posts">
+                <div class="row px-2" v-if="object.can_i_show_posts">
+                    <div class="col-4 my-4" v-for="post in posts">
                         <router-link :to="'/posts/'+post.id" class="user-post">
                             <div class="user-post-image">
                                 <img :src="post.image_url ? post.image_url : default_image()">
@@ -68,7 +81,7 @@
                             </div>
                         </router-link>
                     </div>
-                    <div class="col-md-12 text-center pb-2" v-if="posts.length === 0">
+                    <div class="col-md-12 text-center py-5" v-if="posts.length === 0">
                         <h5>This Account doesn't have posts.</h5>
                     </div>
                 </div>
@@ -84,7 +97,7 @@
 </template>
 
 <script>
-    import { EventBus } from "../../../event-bus.js";
+    import {EventBus} from "../../../event-bus.js";
 
     export default {
         name: "users.show",
@@ -101,6 +114,7 @@
                     followings_count: 0,
                     is_my_profile: false,
                     is_private_account: false,
+                    has_requested_to_follow_me: false,
                 },
                 posts: [],
                 current_page: 1,
@@ -125,7 +139,7 @@
                 axios.get(`/users/${this.username}`)
                     .then(res => {
                         this.object = res.data.data;
-                        if (this.canShowUserPosts()) {
+                        if (this.object.can_i_show_posts) {
                             this.getUsersPosts(1);
                         }
                         document.title = this.object.name || 'Blog';
@@ -141,7 +155,7 @@
                     }
                     let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
 
-                    if (bottomOfWindow && (this.current_page < this.last_page) && this.canShowUserPosts()) {
+                    if (bottomOfWindow && (this.current_page < this.last_page) && this.object.can_i_show_posts) {
                         this.getUsersPosts(this.current_page + 1);
                     }
                 };
@@ -170,7 +184,7 @@
 
                 this.posts = [];
 
-                let status = this.object.my_relationship_status;
+                let status = this.object.relationship_status_as_a_friend_with_auth_user;
                 let action = '';
 
                 switch (status) {
@@ -192,24 +206,7 @@
                     action: action
                 })
                     .then(res => {
-                        let response_status = res.data.data.status;
-
-                        switch (response_status) {
-                            case 'following':
-                                this.object.im_following = true;
-                                this.object.followers_count++;
-                                break;
-                            case 'requested':
-                                break;
-                            case 'unfollowing':
-                                if (status === 'following') {
-                                    this.object.followers_count--;
-                                }
-                                this.object.im_following = false;
-                                break;
-                        }
-
-                        this.object.my_relationship_status = response_status;
+                        this.object = res.data.data;
 
                         if (this.object.im_following) {
                             this.getUsersPosts(1);
@@ -219,21 +216,23 @@
                         console.log(err)
                     })
             },
-            canShowUserPosts() {
-                if (this.object.id == this.$store.getters.user.id) {
-                    return true;
-                }
-                if (this.object.im_following) {
-                    return true;
-                }
-                return false;
-            }
+            confirmFollowRequest(follow_request_id) {
+                axios.get(`/my/follow-requests/${follow_request_id}/confirm`)
+                    .then(res => {
+                        this.object = res.data.data;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            },
         },
         mounted() {
             this.scroll();
-            EventBus.$on('new-follower-for-auth-user',()=>{
-                this.object.followers_count++;
-            })
+            if (this.object.id == this.$store.getters.user.id) {
+                EventBus.$on('new-follower-for-auth-user', () => {
+                    this.object.followers_count++;
+                })
+            }
         },
         beforeRouteLeave(from,to,next){
             next();
@@ -307,5 +306,10 @@
     .posts-container {
         border: 1px solid #f4f4f4;
         box-shadow: 5px -5px 5px #f4f4f4;
+    }
+
+    .user-notifications{
+        height: 20px;
+        background: transparent;
     }
 </style>

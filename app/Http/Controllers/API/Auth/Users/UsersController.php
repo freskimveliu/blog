@@ -18,13 +18,14 @@ class UsersController extends Controller
 
     public function update(Request $request){
         $rules = [
-            'name'  => 'required|string|min:3',
-            'image' => 'nullable|file|image',
+            'name'                  => 'required|string|min:3',
+            'image'                 => 'nullable|file|image',
+            'is_private_account'    => 'boolean',
         ];
 
         $this->validate($request, $rules);
 
-        $params = $request->only('image','name','bio');
+        $params = $request->only('image','name','bio','is_private_account');
 
         if ($image = $request->file('image')) {
             try {

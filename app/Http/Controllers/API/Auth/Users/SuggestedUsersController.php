@@ -15,7 +15,7 @@ class SuggestedUsersController extends Controller
                             ->pluck('friend_id')
                             ->toArray();
 
-        $class_objects = User::suggestedUsers($ids)->with('my_relationship_with_this_user')->inRandomOrder()->paginate(15);
+        $class_objects = User::suggestedUsers($ids)->with('relationships_as_a_friend')->inRandomOrder()->paginate(15);
 
         return $this->respondWithSuccess($class_objects);
     }

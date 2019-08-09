@@ -24,6 +24,12 @@
                         <input type="file" class="form-control" accept="image/*" id="image" @change="onFileSelected">
                     </div>
                     <div class="form-group">
+                        <label class="checkbox-container">Is Private Account
+                            <input type="checkbox" v-model="user.is_private_account">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="form-group">
                         <label for="bio">Bio</label>
                         <textarea name="bio" id="bio" v-model="user.bio" class="form-control" rows="3"></textarea>
                     </div>
@@ -44,7 +50,8 @@
                     email: this.$store.getters.user.email,
                     image_url: this.$store.getters.user.image_url || 'https://i.stack.imgur.com/l60Hf.png',
                     image: '',
-                    bio: this.$store.getters.user.bio || ''
+                    bio: this.$store.getters.user.bio || '',
+                    is_private_account: this.$store.getters.user.is_private_account,
                 }
             }
         },
@@ -59,6 +66,11 @@
                 let user = this.user;
 
                 Object.keys(this.user).forEach(function (key) {
+                    if (key == 'is_private_account' && user[key] == true) {
+                        user[key] = 1;
+                    } else if (key == 'is_private_account' && user[key] == false) {
+                        user[key] = 0;
+                    }
                     form_data.append(key, user[key]);
                 });
 

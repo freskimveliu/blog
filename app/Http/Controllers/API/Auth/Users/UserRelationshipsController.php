@@ -28,14 +28,14 @@ class UserRelationshipsController extends Controller
         switch ($action){
             case RELATIONSHIP_ACTION_FOLLOW:
                 try{
-                    $status = $this->follow($friend);
+                    $this->follow($friend);
                 }catch (\Exception $exception){
                     return $this->respondWithError([],$exception->getMessage());
                 }
                 break;
             case RELATIONSHIP_ACTION_UNFOLLOW:
                 try{
-                    $status = $this->unFollow($friend);
+                    $this->unFollow($friend);
                 }catch (\Exception $exception){
                     return $this->respondWithError([],$exception->getMessage());
                 }
@@ -44,7 +44,8 @@ class UserRelationshipsController extends Controller
                 return $this->respondWithError([],'Action is not supported');
         }
 
-        return $this->respondWithSuccess(['status'=>$status]);
+        $friend = User::full()->find($friend->id);
+        return $this->respondWithSuccess($friend);
     }
 
     private function follow($friend){
@@ -53,13 +54,13 @@ class UserRelationshipsController extends Controller
             $status = RELATIONSHIP_STATUS_REQUESTED;
         }
 
-        $relation = User::getUser()->relationships()->friend($friend->id)->notUnFollowing()->first();
+        $relation = User::getUser()->relationships_as_a_user()->friend($friend->id)->notUnFollowing()->first();
 
         if($relation){
             throw new \Exception("You have a relation with this user");
         }
 
-        User::getUser()->relationships()->updateOrCreate([
+        User::getUser()->relationships_as_a_user()->updateOrCreate([
             'friend_id' => $friend->id
         ], [
             'friend_id' => $friend->id,
@@ -72,7 +73,7 @@ class UserRelationshipsController extends Controller
     private function unFollow($friend){
         $user = User::getUser();
 
-        $relation = $user->relationships()->where('friend_id',$friend->id)->first();
+        $relation = $user->relationships_as_a_user()->where('friend_id',$friend->id)->first();
         if(!$relation){
             throw new \Exception("You don't have relation with this user");
         }
@@ -81,7 +82,7 @@ class UserRelationshipsController extends Controller
             throw new \Exception("You cannot un follow this user.");
         }
 
-        $user->relationships()->updateOrCreate([
+        $user->relationships_as_a_user()->updateOrCreate([
             'friend_id' => $friend->id
         ], [
             'friend_id' => $friend->id,

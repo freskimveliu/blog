@@ -16,7 +16,7 @@ class UserPostsController extends Controller
             return $this->respondWithError([], 'User not found', 404);
         }
 
-        if(!($object->im_following) && ($object->id != User::getUser()->id)){
+        if(!$object->can_i_show_posts){
             return $this->respondWithError([],"This Account is Private. Follow to see their photos and videos.");
         }
 
