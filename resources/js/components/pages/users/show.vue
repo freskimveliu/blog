@@ -123,9 +123,7 @@
             }
         },
         created() {
-            if(this.$store.state.is_logged){
-                this.getUserDetails();
-            }
+            this.getUserDetails();
         },
         beforeRouteUpdate(to, from, next) {
             next();
@@ -228,7 +226,7 @@
         },
         mounted() {
             this.scroll();
-            if (this.object.id == this.$store.getters.user.id) {
+            if (this.$store.getters.isLogged && (this.object.id == this.$store.getters.user.id)) {
                 EventBus.$on('new-follower-for-auth-user', () => {
                     this.object.followers_count++;
                 })

@@ -17,7 +17,7 @@ class Post extends Model
     ];
 
     protected $appends = [
-        'is_favorite', 'short_description', 'diff_for_humans'
+        'is_favorite', 'short_description', 'diff_for_humans', 'is_my_post'
     ];
 
     public function user(){
@@ -59,6 +59,10 @@ class Post extends Model
 
     public function getDiffForHumansAttribute(){
         return Carbon::parse($this->created_at)->diffForHumans();
+    }
+
+    public function getIsMyPostAttribute(){
+        return $this->user_id == (User::getUser()->id ?? 0);
     }
 
     public function scopeFilter($query, Filter $filters){

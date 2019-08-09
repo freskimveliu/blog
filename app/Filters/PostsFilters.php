@@ -33,8 +33,12 @@ class PostsFilters extends Filter
     }
 
     public function q($value){
-        return $this->builder->where('title','LIKE',"%$value%")
+        $value = str_replace(' ','%',$value);
+        return $this->builder->where('title', 'LIKE', "%$value%")
             ->orWhereHas('user',function ($q) use ($value){
+                $q->where('name','LIKE',"%$value%");
+            })
+            ->orWhereHas('category',function($q) use ($value){
                 $q->where('name','LIKE',"%$value%");
             });
     }

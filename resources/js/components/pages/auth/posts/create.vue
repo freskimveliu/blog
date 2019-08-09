@@ -26,7 +26,7 @@
                     <text-editor id="description" v-model="object.description"></text-editor>
                 </div>
                 <button @click="submitForm" class="btn btn-primary">Submit</button>
-                <router-link class="btn btn-warning" :to="'/my/posts'">Cancel</router-link>
+                <router-link class="btn btn-warning" :to="'/posts'">Cancel</router-link>
             </form>
         </div>
     </div>

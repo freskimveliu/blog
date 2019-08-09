@@ -4,8 +4,11 @@
             <div class="col-md-12">
                 <div class="my-5">
                     <h3>{{ object.title }}</h3>
-                    <div class="text-right" v-if="($store.getters.isLogged) && (object.user_id === $store.getters.user.id)">
+                    <div class="text-right" v-if="object.is_my_post">
                         <router-link :to="'/my/posts/'+object.id+'/edit'"><font-awesome-icon icon="pen" class="icon alt"/><span class="ml-1">Edit Post</span></router-link>
+                        <a href="#" class="ml-4" @click="deletePost()">
+                            <font-awesome-icon icon="pen" class="icon alt"/>
+                            <span class="ml-1">Delete Post</span></a>
                     </div>
                     <hr>
                 </div>
@@ -18,7 +21,8 @@
                         <span><font-awesome-icon icon="calendar" class="icon alt"/> {{ object.created_at | day}}</span>
                         <span><font-awesome-icon icon="list" class="icon alt"/> {{ object.category.name }}</span>
                         <span><font-awesome-icon icon="user" class="icon alt"/>
-                            <router-link v-if="object.user" :to="'/users/'+object.user.username">{{ object.user.name }}
+                            <router-link v-if="object.user" :to="'/users/'+object.user.username">
+                                <span>{{ object.is_my_post ? 'Your Post' : object.user.name }}</span>
                             </router-link>
                         </span>
                     </div>
@@ -62,8 +66,8 @@
                             <div class="comment-options">
                                 <span><font-awesome-icon icon="clock" class="icon alt"/> {{ comment.created_at | time }}</span>
                                 <span><font-awesome-icon icon="calendar" class="icon alt"/> {{ comment.created_at | day}}</span>
-                                <span><font-awesome-icon icon="user" class="icon alt"/> {{ comment.user_id == loggedId ? 'Your Comment' : comment.user_name}}</span>
-                                <span class="delete-comment text-danger text" v-if="comment.user_id == loggedId"
+                                <span><font-awesome-icon icon="user" class="icon alt"/> {{ comment.is_my_comment ? 'Your Comment' : comment.user_name}}</span>
+                                <span class="delete-comment text-danger text" v-if="object.is_my_post || comment.is_my_comment"
                                       @click="deleteComment(comment.id,index)">
                                     <font-awesome-icon icon="trash" class="icon alt"/> Delete</span>
                             </div>
@@ -198,6 +202,27 @@
                     }
                 })
 
+            },
+            deletePost() {
+                this.$swal({
+                    title: 'Do you want to delete this post?',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!',
+                    confirmButtonClass: 'btn btn-sm btn-primary',
+                    buttonsStyling: true,
+                }).then((result) => {
+                    if (result.value) {
+                        axios.delete('/my/posts/' + this.$route.params.id)
+                            .then(res => {
+                                this.$router.push(`/users/${this.object.user.username}`);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    }
+                })
             }
         }
     }

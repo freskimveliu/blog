@@ -38,12 +38,14 @@ class PostCommentsController extends Controller
 
         $comment = PostComment::with('user')->find($comment->id);
 
-        broadcast(new NewCommentEvent($comment))->toOthers();
+        try{
+            broadcast(new NewCommentEvent($comment))->toOthers();
+        }catch (\Exception $exception){}
 
         $user_id = User::getUser()->id ?? 0;
         if($user_id == $comment->post->user_id){
             $user = User::getUser();
-            $user->notify(new NewCommentNotification($comment));
+//            $user->notify(new NewCommentNotification($comment));
         }
         return $this->respondWithSuccess($comment);
     }
@@ -55,15 +57,23 @@ class PostCommentsController extends Controller
         if(!$user)
             return $this->respondWithError([],'You can not delete this comment');
 
-        $comment = $user->comments()->find($comment_id);
+        $post = Post::find($id);
 
-        broadcast(new DeleteCommentEvent($comment,$request->get('index')))->toOthers();
+        if(!$post){
+            return $this->respondWithError([],'Post does not exists, or is deletd');
+        }
 
-        if(!$comment)
-            return $this->respondWithError([],'You can not delete this comment');
+        $comment = $post->comments()->find($comment_id);
 
-        $comment->delete();
+//        broadcast(new DeleteCommentEvent($comment,$request->get('index')))->toOthers();
 
-        return $this->respondWithSuccess();
+        if($post->is_my_post || $comment->is_my_comment){
+            $comment->delete();
+
+            return $this->respondWithSuccess();
+        }
+
+        return $this->respondWithError([],'You can not delete this comment');
+
     }
 }

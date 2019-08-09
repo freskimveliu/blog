@@ -127,18 +127,12 @@
                 </div>
             </div>
         </div>
-        <app-pagination @pagination="fetchItems" :pagination="this.pagination"></app-pagination>
     </div>
 </template>
 
 <script>
-    import pagination from '../../partials/pagination'
-
     export default {
         name: "auth.posts.index",
-        components: {
-            'app-pagination': pagination,
-        },
         data: function () {
             return {
                 posts: [],
@@ -170,6 +164,7 @@
                 })
                     .then(res => {
                         this.posts = res.data.data;
+
                         let pagination = res.data.pagination;
                         this.pagination = {
                             current_page: pagination.current_page,
@@ -256,7 +251,19 @@
                         console.log(err)
                     })
             },
+            scroll() {
+                window.onscroll = () => {
+                    let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+
+                    if (bottomOfWindow && (this.pagination.current_page < this.pagination.last_page)) {
+                        this.fetchItems(this.pagination.current_page + 1);
+                    }
+                };
+            }
         },
+        mounted() {
+            this.scroll();
+        }
     }
 </script>
 

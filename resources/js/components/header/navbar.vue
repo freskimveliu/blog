@@ -9,13 +9,10 @@
                 <router-link :class="'navbar-brand'" :to="'/'">BLOG</router-link>
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item px-2">
-                        <router-link :class="'nav-link'" :to="'/'">Home</router-link>
+                        <router-link :class="'nav-link'" v-if="loggedIn" :to="'/posts'">Posts</router-link>
                     </li>
                     <li class="nav-item px-2">
-                        <router-link :class="'nav-link'" :to="'/posts'">Posts</router-link>
-                    </li>
-                    <li class="nav-item px-2">
-                        <router-link :class="'nav-link'" :to="'/my/posts'" v-if="loggedIn">My Posts</router-link>
+                        <router-link :class="'nav-link'" :to="'/my/posts/create'" v-if="loggedIn">Create Post</router-link>
                     </li>
                 </ul>
 

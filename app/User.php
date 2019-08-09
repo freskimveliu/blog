@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Filters\Filter;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\UserFavoritePost;
@@ -178,6 +179,10 @@ class User extends Authenticatable
         return $query->with(['relationships_as_a_user','relationship_as_a_friend_with_auth_user', 'followings','followers',
                             'relationship_as_a_user_with_auth_friend'])
                     ->withCount('followings','followers','posts');
+    }
+
+    public function scopeFilter($query,Filter $filters){
+        return $filters->apply($query);
     }
 
 
