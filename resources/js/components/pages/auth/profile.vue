@@ -6,7 +6,7 @@
             </div>
             <div class="col-md-3">
                 <div class="div-image">
-                    <img :src="user.image_url" class="w-100">
+                    <img :src="user.image_url" class="w-100" @click="clickImage">
                 </div>
             </div>
             <div class="col-md-9">
@@ -19,9 +19,9 @@
                         <label for="email">Email</label>
                         <input type="email" class="form-control" readonly id="email" v-model="user.email">
                     </div>
-                    <div class="form-group">
-                        <label for="image">Image</label>
-                        <input type="file" class="form-control" accept="image/*" id="image" @change="onFileSelected">
+                    <div class="form-group d-none">
+                        <input type="file" ref="imageInput" class="form-control" accept="image/*" id="image"
+                               @change="onFileSelected">
                     </div>
                     <div class="form-group">
                         <label class="checkbox-container">Is Private Account
@@ -48,7 +48,7 @@
                 user: {
                     name: this.$store.getters.user.name,
                     email: this.$store.getters.user.email,
-                    image_url: this.$store.getters.user.image_url || 'https://i.stack.imgur.com/l60Hf.png',
+                    image_url: this.$store.getters.user.image,
                     image: '',
                     bio: this.$store.getters.user.bio || '',
                     is_private_account: this.$store.getters.user.is_private_account,
@@ -78,6 +78,9 @@
                     .then(res => {
                         this.showNotification('Profile updated successfully!');
                     });
+            },
+            clickImage() {
+                this.$refs.imageInput.click()
             }
         },
     }
@@ -88,6 +91,10 @@
         width: 150px;
         height: 150px;
         margin: 0 auto;
+        cursor: pointer;
+        border: 2px solid #f4f4f4;
+        border-radius: 50%;
+        padding: 5px;
     }
 
     .div-image img {

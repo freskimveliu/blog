@@ -1,6 +1,6 @@
 <template>
     <div>
-        <app-navbar></app-navbar>
+        <app-navbar v-if="isLogged"></app-navbar>
         <div id="wrapper">
             <div class="container mb-4">
                 <router-view></router-view>
@@ -19,6 +19,11 @@
         components: {
             'app-navbar': navbar,
         },
+        computed:{
+            isLogged(){
+                return this.$store.getters.isLogged
+            }
+        }
     }
 </script>
 

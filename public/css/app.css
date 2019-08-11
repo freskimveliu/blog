@@ -10669,7 +10669,7 @@ body {
 
 .navbar {
   background-color: #fff !important;
-  box-shadow: 3px 3px 3px #c2c2c2;
+  border-bottom: 1px solid #c2c2c2;
   min-height: 75px;
 }
 
@@ -11326,5 +11326,108 @@ a:hover {
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+textarea:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+[type=text].form-control:focus,
+[type=password].form-control:focus,
+[type=email].form-control:focus,
+[type=tel].form-control:focus,
+[contenteditable].form-control:focus,
+.btn:focus {
+  box-shadow: none;
+}
+
+.auth-pages .form-wrapper {
+  border: 1px solid #c4c4c4;
+  padding: 20px;
+  width: 450px;
+  background: #fff;
+  text-align: center;
+}
+
+.auth-pages .project-name {
+  margin: 22px auto 12px;
+  font-size: 35px;
+  font-weight: bolder;
+}
+
+.auth-pages .project-description {
+  font-weight: 600;
+  line-height: 20px;
+  font-size: 17px;
+  margin-bottom: 30px;
+  color: #999;
+  text-align: center;
+}
+
+.auth-pages .form-wrapper input {
+  font-size: 14px;
+}
+
+.auth-pages .input-auth {
+  background-color: #fafafa;
+}
+
+.auth-pages .btn-auth {
+  width: 100%;
+}
+
+.auth-pages .or {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.auth-pages .or-border-left {
+  width: 175px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  background-color: #efefef;
+}
+
+.auth-pages .or-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+  text-transform: uppercase;
+  color: #999;
+}
+
+.auth-pages .or-border-right {
+  width: 175px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  background-color: #efefef;
+}
+
+.auth-pages .forget-password {
+  font-size: 12px;
+  color: #999;
+}
+
+.auth-pages .register-wrapper {
+  margin-top: 40px;
+}
+
+.auth-pages .form-errors {
+  font-size: 13px;
+  text-align: left !important;
+  color: #ed4956;
+  margin: 3px 0;
 }
 

@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -16,7 +17,8 @@ class AuthController extends Controller
         User::create([
             'name'      => $request->get('name'),
             'email'     => $request->get('email'),
-            'password'  => bcrypt($request->get('password'))
+            'password'  => bcrypt($request->get('password')),
+            'username'  => Str::slug($request->get('name')),
         ]);
 
         $credentials = request(['email', 'password']);

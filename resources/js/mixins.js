@@ -27,6 +27,9 @@ const mixins = Vue.mixin({
         },
         default_user_image() {
             return '/images/defaults/profile.png';
+        },
+        default_loader_image(){
+            return '/images/defaults/profile.png';
         }
     }
 })

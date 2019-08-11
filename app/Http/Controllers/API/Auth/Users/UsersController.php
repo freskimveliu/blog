@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\FileManager;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -34,6 +35,9 @@ class UsersController extends Controller
                 return $this->respondWithError([],$exception->getMessage());
             }
         }
+
+        //TODO change this slug generator;
+        $params['username'] = Str::slug($request->get('name'));
 
         $user = User::getUser();
         $user->update($params);

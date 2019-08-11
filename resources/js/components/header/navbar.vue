@@ -68,7 +68,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="div-image">
-                                    <img :src="user.image_url || 'https://i.stack.imgur.com/l60Hf.png'"/>
+                                    <img :src="user.image || 'https://i.stack.imgur.com/l60Hf.png'"/>
                                 </div>
                                 {{ user.name}}
                             </a>

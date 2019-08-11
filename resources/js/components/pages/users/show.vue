@@ -28,17 +28,17 @@
                                  v-show="(object.relationship_status_as_a_friend_with_auth_user === 'unfollowing') || (object.relationship_status_as_a_friend_with_auth_user == null)">
                                 <button @click="relationshipAction" class="btn btn-sm btn-primary px-4">Follow</button>
                             </div>
-                            <div class="following"
+                            <div class="following bg-white"
                                  v-show="(object.relationship_status_as_a_friend_with_auth_user === 'following')">
-                                <button class="btn btn-sm px-4" @click="relationshipAction">Following</button>
+                                <button class="btn btn-sm px-4" @click="unFollowUser">Following</button>
                             </div>
                             <div class="following"
                                  v-show="(object.relationship_status_as_a_friend_with_auth_user === 'requested')">
-                                <button class="btn btn-sm px-4" @click="relationshipAction">Requested</button>
+                                <button class="btn btn-sm bg-white px-4" @click="relationshipAction">Requested</button>
                             </div>
                         </div>
                         <div class="follow-user ml-5 pl-3" v-if="object.is_my_profile">
-                            <div class="following">
+                            <div class="following bg-white">
                                 <router-link :to="'/profile/edit'" class="btn btn-sm px-4">Edit Profile</router-link>
                             </div>
                         </div>
@@ -223,6 +223,21 @@
                         console.log(err);
                     })
             },
+            unFollowUser(){
+                this.$swal({
+                    title: `Are you sure, you want to unfollow ${this.object.name}?`,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes!',
+                    confirmButtonClass: 'btn btn-sm btn-primary',
+                    buttonsStyling: true,
+                }).then((result) => {
+                    if (result.value) {
+                        this.relationshipAction();
+                    }
+                })
+            }
         },
         mounted() {
             this.scroll();
@@ -304,6 +319,7 @@
     .posts-container {
         border: 1px solid #f4f4f4;
         box-shadow: 5px -5px 5px #f4f4f4;
+        background-color: #fff;
     }
 
     .user-notifications{

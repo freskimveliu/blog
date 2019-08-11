@@ -33,7 +33,7 @@ class User extends Authenticatable
     protected $appends = [
         'im_following', 'is_my_profile', 'is_following_me', 'image',
         'is_following_me_and_im_not_following_him', 'can_i_show_posts', 'has_requested_to_follow_me',
-        'relationship_status_as_a_user_with_auth_friend', 'relationship_status_as_a_friend_with_auth_user'
+        'relationship_status_as_a_user_with_auth_friend', 'relationship_status_as_a_friend_with_auth_user',
     ];
 
     /*
