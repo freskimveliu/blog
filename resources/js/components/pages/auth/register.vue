@@ -5,7 +5,9 @@
                 <div class="d-flex justify-content-center my-5 auth-pages">
                     <div>
                         <div class="form-wrapper">
-                            <div class="project-name">Blog</div>
+                            <div class="project-name">
+                                <router-link :to="'/'">Blog</router-link>
+                            </div>
                             <div class="project-description">
                                 Sign up to see posts from your friends.
                             </div>

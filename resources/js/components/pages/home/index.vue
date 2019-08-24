@@ -3,9 +3,19 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <div class="d-flex justify-content-center my-5 auth-pages">
+                    <div class="d-none d-md-block">
+                        <div class="display-image">
+                            <img class="main-image"
+                                 src="https://www.instagram.com/static/images/homepage/home-phones@2x.png/9364675fb26a.png">
+                            <img class="other-images"
+                                 src="https://instagram.com/static/images/homepage/screenshot2-2x.jpg/177140221987.jpg">
+                        </div>
+                    </div>
                     <div>
                         <div class="form-wrapper">
-                            <div class="project-name">Blog</div>
+                            <div class="project-name">
+                                <router-link :to="'/'">Blog</router-link>
+                            </div>
                             <div class="project-description">
                                 Sign in to see posts from your friends.
                             </div>
@@ -78,5 +88,22 @@
 </script>
 
 <style scoped>
+    .display-image {
+        height: 500px;
+        width: 350px;
+        position: relative;
+    }
 
+    .display-image .main-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .display-image .other-images {
+        position: absolute;
+        top: 85px;
+        left: 113px;
+        width: 192px;
+    }
 </style>

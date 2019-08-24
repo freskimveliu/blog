@@ -34,6 +34,8 @@ class User extends Authenticatable
         'im_following', 'is_my_profile', 'is_following_me', 'image',
         'is_following_me_and_im_not_following_him', 'can_i_show_posts', 'has_requested_to_follow_me',
         'relationship_status_as_a_user_with_auth_friend', 'relationship_status_as_a_friend_with_auth_user',
+        'has_blocked_relationships', 'next_relationship_action_as_a_friend_with_auth_user',
+        'next_relationship_action_as_a_user_with_auth_friend',
     ];
 
     /*
@@ -78,8 +80,16 @@ class User extends Authenticatable
         return $this->hasMany(UserRelationship::class,'user_id')->where('status',RELATIONSHIP_STATUS_FOLLOWING);
     }
 
+    public function following_auth_user(){
+        return $this->hasOne(UserRelationship::class,'user_id')->where('status',RELATIONSHIP_STATUS_FOLLOWING)->where('friend_id',(User::getUser()->id ?? 0))->latest();
+    }
+
     public function followers(){
         return $this->hasMany(UserRelationship::class,'friend_id')->where('status',RELATIONSHIP_STATUS_FOLLOWING);
+    }
+
+    public function follower_auth_user(){
+        return $this->hasOne(UserRelationship::class,'friend_id')->where('status',RELATIONSHIP_STATUS_FOLLOWING)->where('user_id',(User::getUser()->id ?? 0))->latest();
     }
 
     /*
@@ -88,25 +98,65 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
     public function getImFollowingAttribute(){
-        if(!($this->relationLoaded('followers'))) return null;
-        return $this->followers()->where('user_id',(User::getUser()->id ?? 0))->exists();
+        if(!($this->relationLoaded('follower_auth_user'))) return null;
+        return $this->follower_auth_user()->exists();
     }
 
     public function getIsFollowingMeAttribute(){
-        if(!$this->relationLoaded('followings')) return null;
-        return $this->followings()->where('friend_id',(User::getUser()->id ?? 0))->exists();
+        if(!$this->relationLoaded('following_auth_user')) return null;
+        return $this->following_auth_user()->exists();
     }
 
     public function getRelationshipStatusAsAFriendWithAuthUserAttribute(){
         if(!$this->relationLoaded('relationship_as_a_friend_with_auth_user')) return null;
 
-        return $this->relationship_as_a_friend_with_auth_user()->first()->status ?? null;
+        return $this->relationship_as_a_friend_with_auth_user->status ?? RELATIONSHIP_STATUS_UNFOLLOWING;
     }
 
     public function getRelationshipStatusAsAUserWithAuthFriendAttribute(){
         if(!$this->relationLoaded('relationship_as_a_user_with_auth_friend')) return null;
 
-        return $this->relationship_as_a_user_with_auth_friend()->first()->status ?? null;
+        return $this->relationship_as_a_user_with_auth_friend->status ?? RELATIONSHIP_STATUS_UNFOLLOWING;
+    }
+
+    public function getNextRelationshipActionAsAFriendWithAuthUserAttribute(){
+        if(!$this->relationLoaded('relationship_as_a_friend_with_auth_user')) return null;
+
+        $status  = $this->relationship_as_a_friend_with_auth_user->status ?? RELATIONSHIP_STATUS_UNFOLLOWING;
+        $action  = null;
+        switch($status){
+            case RELATIONSHIP_STATUS_UNFOLLOWING:
+                $action = RELATIONSHIP_ACTION_FOLLOW;
+                break;
+            case RELATIONSHIP_STATUS_REQUESTED:
+            case RELATIONSHIP_STATUS_FOLLOWING:
+                $action = RELATIONSHIP_ACTION_UNFOLLOW;
+                break;
+            default:
+                return null;
+        }
+
+        return $action;
+    }
+
+    public function getNextRelationshipActionAsAUserWithAuthFriendAttribute(){
+        if(!$this->relationLoaded('relationship_as_a_user_with_auth_friend')) return null;
+
+        $status  = $this->relationship_as_a_user_with_auth_friend->status ?? RELATIONSHIP_STATUS_UNFOLLOWING;
+        $action  = null;
+        switch($status){
+            case RELATIONSHIP_STATUS_UNFOLLOWING:
+                $action = RELATIONSHIP_ACTION_FOLLOW;
+                break;
+            case RELATIONSHIP_STATUS_REQUESTED:
+            case RELATIONSHIP_STATUS_FOLLOWING:
+                $action = RELATIONSHIP_ACTION_UNFOLLOW;
+                break;
+            default:
+                return null;
+        }
+
+        return $action;
     }
 
     public function getIsMyProfileAttribute(){
@@ -154,7 +204,7 @@ class User extends Authenticatable
     }
 
     public function getHasRequestedToFollowMeAttribute(){
-        if(!$this->relationLoaded('relationships_as_a_user')) return false;
+        if(!$this->relationLoaded('relationship_as_a_user_with_auth_friend')) return false;
 
         return $this->relationship_as_a_user_with_auth_friend()
                      ->where('status',RELATIONSHIP_STATUS_REQUESTED)
@@ -163,6 +213,22 @@ class User extends Authenticatable
 
     public function getImageAttribute(){
         return $this->image_url ?? asset('/images/defaults/profile.png');
+    }
+
+    public function getHasBlockedRelationshipsAttribute(){
+        if($this->is_my_profile){
+            return false;
+        }
+
+        if(!$this->is_private_account){
+            return false;
+        }
+
+        if($this->im_following){
+            return false;
+        }
+
+        return true;
     }
 
     /*
@@ -176,7 +242,7 @@ class User extends Authenticatable
     }
 
     public function scopeFull($query){
-        return $query->with(['relationships_as_a_user','relationship_as_a_friend_with_auth_user', 'followings','followers',
+        return $query->with(['relationship_as_a_friend_with_auth_user', 'following_auth_user','follower_auth_user',
                             'relationship_as_a_user_with_auth_friend'])
                     ->withCount('followings','followers','posts');
     }

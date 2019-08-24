@@ -11347,7 +11347,7 @@ input[type=number]:focus,
 .auth-pages .form-wrapper {
   border: 1px solid #c4c4c4;
   padding: 20px;
-  width: 450px;
+  width: 400px;
   background: #fff;
   text-align: center;
 }
@@ -11385,7 +11385,7 @@ input[type=number]:focus,
 }
 
 .auth-pages .or-border-left {
-  width: 175px;
+  width: 150px;
   height: 2px;
   position: absolute;
   top: 50%;
@@ -11405,7 +11405,7 @@ input[type=number]:focus,
 }
 
 .auth-pages .or-border-right {
-  width: 175px;
+  width: 150px;
   height: 2px;
   position: absolute;
   top: 50%;
@@ -11429,5 +11429,9 @@ input[type=number]:focus,
   text-align: left !important;
   color: #ed4956;
   margin: 3px 0;
+}
+
+.swal2-container {
+  z-index: 9999999;
 }
 

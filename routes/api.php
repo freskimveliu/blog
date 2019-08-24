@@ -5,11 +5,11 @@
 
 Route::group(['middleware'=>'api-auth'],function (){
     Route::post(        '/posts/{id}/favorite',             'API\Posts\PostsController@favoriteAction');
-    Route::get(         '/profile',                         'API\Auth\Users\UsersController@index');
-    Route::post(        '/profile',                         'API\Auth\Users\UsersController@update');
+    Route::get(         '/profile',                         'API\Auth\Profile\ProfileController@index');
+    Route::post(        '/profile',                         'API\Auth\Profile\ProfileController@update');
+    Route::apiResource( '/my/relationships',                'API\Auth\Profile\MyRelationshipsController');
     Route::apiResource( '/my/posts/{id}/comments',          'API\Auth\Posts\PostCommentsController');
     Route::apiResource( '/my/posts',                        'API\Auth\Posts\PostsController');
-    Route::apiResource( '/my/relationships',                'API\Auth\Users\UserRelationshipsController');
     Route::get(         '/my/follow-requests',              'API\Auth\Users\UserFollowRequestsController@index');
     Route::get(         '/my/follow-requests/{id}/confirm', 'API\Auth\Users\UserFollowRequestsController@confirm');
     Route::get(         '/my/follow-requests/{id}/cancel',  'API\Auth\Users\UserFollowRequestsController@cancel');
@@ -18,6 +18,7 @@ Route::group(['middleware'=>'api-auth'],function (){
     Route::apiResource( '/posts/{id}/comments',             'API\Posts\PostCommentsController');
     Route::get(         '/categories',                      'API\Auth\Posts\PostsController@getCategories');
     Route::get(         '/users/{slug}/posts',              'API\Auth\Users\UserPostsController@index');
+    Route::get(         '/users/{slug}/relationships',      'API\Users\UserRelationshipsController@index');
     Route::get(         '/suggested-users',                 'API\Auth\Users\SuggestedUsersController@index');
 });
 

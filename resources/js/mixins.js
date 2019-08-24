@@ -30,6 +30,21 @@ const mixins = Vue.mixin({
         },
         default_loader_image(){
             return '/images/defaults/profile.png';
+        },
+        showConfirmAlert(title,action,params){
+            this.$swal({
+                title: title,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes!',
+                confirmButtonClass: 'btn btn-sm btn-primary',
+                buttonsStyling: true,
+            }).then((result) => {
+                if (result.value) {
+                    return action(params);
+                }
+            })
         }
     }
 })

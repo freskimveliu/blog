@@ -47,10 +47,10 @@
                         <div class="posts-count">
                             <strong>{{ object.posts_count }}</strong> Posts
                         </div>
-                        <div class="followers-count">
+                        <div class="followers-count" @click="showRelationships('followers')">
                             <strong>{{ object.followers_count }} </strong> Followers
                         </div>
-                        <div class="following-count">
+                        <div class="followings-count" @click="showRelationships('followings')">
                             <strong>{{ object.followings_count }}</strong> Following
                         </div>
                     </div>
@@ -93,14 +93,27 @@
                 </div>
             </div>
         </div>
+
+        <app-followers :show_followers="show_followers"
+                       @relationshipStatuses="relationshipStatuses"
+                       @hideFollowers="show_followers = false"></app-followers>
+        <app-followings :show_followings="show_followings"
+                       @relationshipStatuses="relationshipStatuses"
+                       @hideFollowings="show_followings = false"></app-followings>
     </div>
 </template>
 
 <script>
     import {EventBus} from "../../../event-bus.js";
+    import AppFollowers from '../../pages/users/partials/followers';
+    import AppFollowings from '../../pages/users/partials/followings';
 
     export default {
         name: "users.show",
+        components: {
+            'app-followers': AppFollowers,
+            'app-followings': AppFollowings,
+        },
         data: function () {
             return {
                 object: {
@@ -115,20 +128,17 @@
                     is_my_profile: false,
                     is_private_account: false,
                     has_requested_to_follow_me: false,
+                    has_blocked_relationships: true,
                 },
                 posts: [],
                 current_page: 1,
                 last_page: 1,
                 username: '',
+                show_followers: false,
+                show_followings: false,
             }
         },
         created() {
-            this.getUserDetails();
-        },
-        beforeRouteUpdate(to, from, next) {
-            next();
-            this.posts = [];
-            this.username = this.$route.params.slug;
             this.getUserDetails();
         },
         methods: {
@@ -175,31 +185,10 @@
                     })
             },
             relationshipAction() {
-                if (!this.$store.state.is_logged) {
-                    this.$router.push('/login');
-                    return;
-                }
-
                 this.posts = [];
 
-                let status = this.object.relationship_status_as_a_friend_with_auth_user;
-                let action = '';
-
-                switch (status) {
-                    case 'following':
-                    case 'requested':
-                        action = 'unfollow';
-                        break;
-                    case 'unfollowing':
-                        action = 'follow';
-                        break;
-                    case null:
-                        action = 'follow';
-                        break;
-                    default:
-                        return false;
-                }
-
+                let action = this.object.next_relationship_action_as_a_friend_with_auth_user;
+                
                 axios.put(`/my/relationships/${this.$route.params.slug}`, {
                     action: action
                 })
@@ -224,33 +213,63 @@
                     })
             },
             unFollowUser(){
-                this.$swal({
-                    title: `Are you sure, you want to unfollow ${this.object.name}?`,
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes!',
-                    confirmButtonClass: 'btn btn-sm btn-primary',
-                    buttonsStyling: true,
-                }).then((result) => {
-                    if (result.value) {
-                        this.relationshipAction();
-                    }
-                })
+                let title = `Are you sure, you want to un follow ${this.object.name}?`;
+                this.showConfirmAlert(title, this.relationshipAction);
+            },
+            showRelationships(status) {
+                if (this.object.has_blocked_relationships) {
+                    return false;
+                }
+
+                if (status === 'followers') {
+                    this.show_followers = true;
+                }
+
+                if (status === 'followings') {
+                    this.show_followings = true;
+                }
+            },
+            relationshipStatuses(statuses) {
+                if (!this.object.is_my_profile) {
+                    return false;
+                }
+
+                let old_status = statuses.old_status;
+                let new_status = statuses.new_status;
+
+                if (old_status === 'following' && new_status === 'unfollowing') {
+                    this.object.followings_count--;
+                }
+
+                if (new_status === 'following') {
+                    this.object.followings_count++;
+                }
             }
         },
         mounted() {
             this.scroll();
-            if (this.$store.getters.isLogged && (this.object.id == this.$store.getters.user.id)) {
+            if (this.$store.getters.isLogged && (this.object.id === this.$store.getters.user.id)) {
                 EventBus.$on('new-follower-for-auth-user', () => {
                     this.object.followers_count++;
                 })
             }
         },
+        watch:{
+            $route(to,from){
+                document.title = 'Blog';
+                this.posts = [];
+                this.username = this.$route.params.slug;
+                this.getUserDetails();
+            }
+        },
         beforeRouteLeave(from,to,next){
             next();
-            document.title = 'Blog';
-        }
+
+        },
+        beforeRouteUpdate(to, from, next) {
+            next();
+
+        },
     }
 </script>
 
@@ -325,5 +344,9 @@
     .user-notifications{
         height: 20px;
         background: transparent;
+    }
+
+    .followers-count, .followings-count {
+        cursor: pointer;
     }
 </style>
