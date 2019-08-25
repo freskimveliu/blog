@@ -7,7 +7,7 @@
                 </div>
                 <div v-if="object.has_requested_to_follow_me">
                     {{object.name }} has requested to follow you, confirm <a href="javascript:void(0)"
-                                                                             @click="confirmFollowRequest(object.relationships_as_a_user[0].id)"
+                                                                             @click="confirmFollowRequest(object.relationship_as_a_user_with_auth_friend.id)"
                                                                              class="text-primary"> here.</a>
                 </div>
             </div>
@@ -98,8 +98,8 @@
                        @relationshipStatuses="relationshipStatuses"
                        @hideFollowers="show_followers = false"></app-followers>
         <app-followings :show_followings="show_followings"
-                       @relationshipStatuses="relationshipStatuses"
-                       @hideFollowings="show_followings = false"></app-followings>
+                        @relationshipStatuses="relationshipStatuses"
+                        @hideFollowings="show_followings = false"></app-followings>
     </div>
 </template>
 
@@ -188,7 +188,7 @@
                 this.posts = [];
 
                 let action = this.object.next_relationship_action_as_a_friend_with_auth_user;
-                
+
                 axios.put(`/my/relationships/${this.$route.params.slug}`, {
                     action: action
                 })
@@ -254,8 +254,8 @@
                 })
             }
         },
-        watch:{
-            $route(to,from){
+        watch: {
+            $route(to, from) {
                 document.title = 'Blog';
                 this.posts = [];
                 this.username = this.$route.params.slug;

@@ -6,8 +6,8 @@
                     <h3>{{ object.title }}</h3>
                     <div class="text-right" v-if="object.is_my_post">
                         <router-link :to="'/my/posts/'+object.id+'/edit'"><font-awesome-icon icon="pen" class="icon alt"/><span class="ml-1">Edit Post</span></router-link>
-                        <a href="#" class="ml-4" @click="deletePost()">
-                            <font-awesome-icon icon="pen" class="icon alt"/>
+                        <a href="#" class="ml-4" @click="showConfirmAlertToDeletePost()">
+                            <font-awesome-icon icon="trash" class="icon alt"/>
                             <span class="ml-1">Delete Post</span></a>
                     </div>
                     <hr>
@@ -68,7 +68,7 @@
                                 <span><font-awesome-icon icon="calendar" class="icon alt"/> {{ comment.created_at | day}}</span>
                                 <span><font-awesome-icon icon="user" class="icon alt"/> {{ comment.is_my_comment ? 'Your Comment' : comment.user_name}}</span>
                                 <span class="delete-comment text-danger text" v-if="object.is_my_post || comment.is_my_comment"
-                                      @click="deleteComment(comment.id,index)">
+                                      @click="showConfirmAlertToDeleteComment(comment.id,index)">
                                     <font-awesome-icon icon="trash" class="icon alt"/> Delete</span>
                             </div>
                         </div>
@@ -180,49 +180,39 @@
                         console.log(err);
                     })
             },
-
-            deleteComment(id, index) {
-                this.$swal({
-                    title: 'Do you want to delete this comment?',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes!',
-                    confirmButtonClass: 'btn btn-sm btn-primary',
-                    buttonsStyling: true,
-                }).then((result) => {
-                    if (result.value) {
-                        axios.delete('/posts/' + this.$route.params.id + '/comments/' + id + `?index=${index}`)
-                            .then(res => {
-                                this.object.comments.splice(index, 1);
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            })
-                    }
-                })
-
+            deletePost(){
+                axios.delete('/my/posts/' + this.$route.params.id)
+                    .then(res => {
+                        this.$router.push(`/users/${this.object.user.username}`);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             },
-            deletePost() {
-                this.$swal({
-                    title: 'Do you want to delete this post?',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes!',
-                    confirmButtonClass: 'btn btn-sm btn-primary',
-                    buttonsStyling: true,
-                }).then((result) => {
-                    if (result.value) {
-                        axios.delete('/my/posts/' + this.$route.params.id)
-                            .then(res => {
-                                this.$router.push(`/users/${this.object.user.username}`);
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            })
-                    }
-                })
+            showConfirmAlertToDeletePost() {
+                let title = 'Do you want to delete this post, you cannot revert it?';
+                this.showConfirmAlert(title,this.deletePost);
+            },
+            deleteComment(params){
+                let id = params.id;
+                let index = params.index;
+
+                axios.delete('/posts/' + this.$route.params.id + '/comments/' + id + `?index=${index}`)
+                    .then(res => {
+                        this.object.comments.splice(index, 1);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            },
+            showConfirmAlertToDeleteComment(id,index){
+                let params = {
+                    id:id,
+                    index:index,
+                };
+
+                let title = 'Do you want to delete this comment?';
+                this.showConfirmAlert(title,this.deleteComment,params);
             }
         }
     }

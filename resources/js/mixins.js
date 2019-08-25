@@ -15,6 +15,12 @@ const mixins = Vue.mixin({
                 type: type || 'success',
             })
         },
+        showErrorNotification(title){
+            this.showNotification(title,'error');
+        },
+        showSuccessNotification(title){
+            this.showNotification(title,'success');
+        },
         inArray(needle, haystack) {
             let length = haystack.length;
             for (let i = 0; i < length; i++) {
