@@ -69,7 +69,7 @@
                 this.errors = [];
                 this.$store.dispatch('login', this.$data.form)
                     .then(response => {
-                        window.location.reload()
+                        this.$router.push('/')
                     })
                     .catch(err => {
                         this.errors = err.data.errors;

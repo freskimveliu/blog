@@ -1,32 +1,22 @@
 <template>
     <div>
-        <div class="row py-4">
+        <div class="row py-2">
             <div class="col-md-8">
-                <div class=" justify-content-between">
-                    <div class="d-inline-flex mb-4">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Filter By Category
-                            </button>
-                            <div class="dropdown-menu">
-                                <a v-for="category in categories"
-                                   :class="inArray(category.id,selected_categories_ids) ? 'bg-primary text-white' : ''"
-                                   @click="categoryClicked(category.id)" class="dropdown-item mb-1"
-                                   href="#">{{ category.name }}</a>
-                            </div>
-                        </div>
-                        <div v-if="$store.state.is_logged" class="">
-                            <label class="checkbox-container">Only Favorites
-                                <input type="checkbox" @click="myFavoritesClicked" v-model="my_favorites">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
+                <div class="categories d-md-flex">
+                    <div class="category" v-for="(category,index) in categories"
+                         @click="categoryClicked(category.id,index)" :class="category.is_selected ? 'selected' : ''"
+                    >
+                        <span>{{ category.name }}</span>
                     </div>
-                    <div class="w-100">
-                        <input type="text" class="form-control search-input" placeholder="Search post"
-                               @keyup.enter="fetchItems(1)" @change="fetchItems(1)"
-                               v-model="search_query">
-                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="w-100">
+                    <input type="text" class="form-control search-input" placeholder="Search post"
+                           @keyup.enter="fetchItems(1)" @change="fetchItems(1)"
+                           v-model="search_query">
                 </div>
             </div>
         </div>
@@ -84,7 +74,7 @@
                     <h5> We couldn't find any post.</h5>
                 </div>
             </div>
-            <div class="col-md-4 d-sm-none d-md-block">
+            <div class="col-md-4 d-none d-md-block">
                 <div class="suggested-users">
                     <div class="suggested-users-title m-2 d-flex justify-content-between">
                         <div>
@@ -204,7 +194,7 @@
                         console.log(err)
                     })
             },
-            categoryClicked(id) {
+            categoryClicked(id, index) {
                 let new_array = this.selected_categories_ids.filter(function (e) {
                     return (e === id);
                 });
@@ -213,11 +203,14 @@
                         if (this.selected_categories_ids[i] === id) {
                             this.selected_categories_ids.splice(i, 1);
                             i--;
+                            this.categories[index].is_selected = false;
                         }
                     }
                 } else {
+                    this.categories[index].is_selected = true;
                     this.selected_categories_ids.push(id);
                 }
+
                 this.fetchItems(1);
             },
             myFavoritesClicked() {
@@ -271,5 +264,21 @@
     /* The checkbox-container */
     .checkbox-container {
         margin: 7px 60px;
+    }
+
+    .category {
+        color: #999;
+        border: 1px solid #999;;
+        padding: 8px 10px;
+        border-radius: 10px;
+        margin: 10px 15px 10px 0;
+        cursor: pointer;
+    }
+
+    .categories .selected {
+        color: #1d2124;
+        border: 1px solid #1d2124;
+        font-weight: bold;
+        background:#fff;
     }
 </style>

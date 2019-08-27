@@ -26,13 +26,14 @@ Vue.use(VueProgressBar, {
 
 
 axios.defaults.baseURL = 'http://localhost:8000/api';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.state.access_token;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 let newVue = new Vue({});
 
 axios.interceptors.request.use(function (config) {
         newVue.$Progress.start();
+        const token = localStorage.getItem('access_token');
+        config.headers.Authorization =  token ? `Bearer ${token}` : '';
         return config
     },
     (error) => {
@@ -46,15 +47,8 @@ axios.interceptors.response.use(function (response) {
     newVue.$Progress.fail();
     switch (error.response.status) {
         case 401:{
-            Swal.fire({
-                title: 'Session expired!',
-                text: "Your session has expired. You have to login again.",
-                type: 'warning',
-                confirmButtonText: "Okay",
-            }).then((res) => {
-                store.dispatch('logout');
-                router.push('/login');
-            });
+            store.dispatch('logout');
+            router.push('/login');
             break;
         }
         case 403:{
